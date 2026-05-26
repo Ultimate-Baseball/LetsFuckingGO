@@ -1,0 +1,5092 @@
+[
+  {
+    "date": "2026-05-26",
+    "timestamp": "2026-05-26T15:46:07.946Z",
+    "filename": "2026-05-25-UBT Daily Report (Android).xlsx",
+    "teamsUpdated": 30,
+    "teamsChanged": [
+      {
+        "abbr": "OAK",
+        "name": "Athletics",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.93,
+          "whip14d": 1.34,
+          "avgReliefIPPerGame": 3.24
+        },
+        "after": {
+          "grade": "C",
+          "tier": "high",
+          "score": 45,
+          "era14d": 3.96,
+          "whip14d": 1.27,
+          "avgReliefIPPerGame": 3.32
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "BAL",
+        "name": "Baltimore Orioles",
+        "before": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 5.84,
+          "whip14d": 1.4,
+          "avgReliefIPPerGame": 3.08
+        },
+        "after": {
+          "grade": "F",
+          "tier": "veryLow",
+          "score": 55,
+          "era14d": 6.92,
+          "whip14d": 1.57,
+          "avgReliefIPPerGame": 2.99
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "HOU",
+        "name": "Houston Astros",
+        "before": {
+          "grade": "B",
+          "tier": "high",
+          "score": 55,
+          "era14d": 2.08,
+          "whip14d": 1.13,
+          "avgReliefIPPerGame": 3.54
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.03,
+          "whip14d": 1.1,
+          "avgReliefIPPerGame": 3.63
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "KC",
+        "name": "Kansas City Royals",
+        "before": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 3.7,
+          "whip14d": 1.67,
+          "avgReliefIPPerGame": 3.1
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 3.99,
+          "whip14d": 1.69,
+          "avgReliefIPPerGame": 3.01
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "LAA",
+        "name": "Los Angeles Angels",
+        "before": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.42,
+          "whip14d": 1.75,
+          "avgReliefIPPerGame": 2.19
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 2.34,
+          "whip14d": 1.49,
+          "avgReliefIPPerGame": 2.24
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SEA",
+        "name": "Seattle Mariners",
+        "before": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 2.74,
+          "whip14d": 1.45,
+          "avgReliefIPPerGame": 2.28
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 3.16,
+          "whip14d": 1.56,
+          "avgReliefIPPerGame": 2.13
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TEX",
+        "name": "Texas Rangers",
+        "before": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 3.8,
+          "whip14d": 1.13,
+          "avgReliefIPPerGame": 2.58
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 4.88,
+          "whip14d": 1.4,
+          "avgReliefIPPerGame": 2.35
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TOR",
+        "name": "Toronto Blue Jays",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 3.59,
+          "whip14d": 1.46,
+          "avgReliefIPPerGame": 2.89
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.37,
+          "whip14d": 1.63,
+          "avgReliefIPPerGame": 2.69
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "CHC",
+        "name": "Chicago Cubs",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3,
+          "whip14d": 1.33,
+          "avgReliefIPPerGame": 3.75
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryHigh",
+          "score": 35,
+          "era14d": 2.89,
+          "whip14d": 1.32,
+          "avgReliefIPPerGame": 4.08
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CIN",
+        "name": "Cincinnati Reds",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 7.31,
+          "whip14d": 1.49,
+          "avgReliefIPPerGame": 2.83
+        },
+        "after": {
+          "grade": "D",
+          "tier": "high",
+          "score": 33,
+          "era14d": 7.06,
+          "whip14d": 1.47,
+          "avgReliefIPPerGame": 2.78
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "COL",
+        "name": "Colorado Rockies",
+        "before": {
+          "grade": "B",
+          "tier": "high",
+          "score": 55,
+          "era14d": 2.44,
+          "whip14d": 1.26,
+          "avgReliefIPPerGame": 3.41
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.09,
+          "whip14d": 1.29,
+          "avgReliefIPPerGame": 3.33
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "LAD",
+        "name": "Los Angeles Dodgers",
+        "before": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 1.75,
+          "whip14d": 1.02,
+          "avgReliefIPPerGame": 2.78
+        },
+        "after": {
+          "grade": "A",
+          "tier": "veryLow",
+          "score": 100,
+          "era14d": 0.5,
+          "whip14d": 0.8,
+          "avgReliefIPPerGame": 2.78
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIL",
+        "name": "Milwaukee Brewers",
+        "before": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.98,
+          "whip14d": 1.54,
+          "avgReliefIPPerGame": 2.95
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.7,
+          "whip14d": 1.45,
+          "avgReliefIPPerGame": 2.88
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYM",
+        "name": "New York Mets",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 2.74,
+          "whip14d": 1.31,
+          "avgReliefIPPerGame": 3.56
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.48,
+          "whip14d": 1.25,
+          "avgReliefIPPerGame": 3.63
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "PHI",
+        "name": "Philadelphia Phillies",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 4.7,
+          "whip14d": 1.36,
+          "avgReliefIPPerGame": 2.61
+        },
+        "after": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 4.26,
+          "whip14d": 1.29,
+          "avgReliefIPPerGame": 2.64
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "PIT",
+        "name": "Pittsburgh Pirates",
+        "before": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.62,
+          "whip14d": 1.51,
+          "avgReliefIPPerGame": 2.93
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 4.14,
+          "whip14d": 1.38,
+          "avgReliefIPPerGame": 3.01
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "SF",
+        "name": "San Francisco Giants",
+        "before": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.42,
+          "whip14d": 1.07,
+          "avgReliefIPPerGame": 2.86
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 2.9,
+          "whip14d": 1.23,
+          "avgReliefIPPerGame": 2.87
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "WSH",
+        "name": "Washington Nationals",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.58,
+          "whip14d": 1.34,
+          "avgReliefIPPerGame": 3.98
+        },
+        "after": {
+          "grade": "C",
+          "tier": "high",
+          "score": 45,
+          "era14d": 3.62,
+          "whip14d": 1.35,
+          "avgReliefIPPerGame": 3.82
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      }
+    ],
+    "teamsUnchanged": 12
+  },
+  {
+    "date": "2026-05-25",
+    "timestamp": "2026-05-25T15:34:07.955Z",
+    "filename": "2026-05-24-UBT Daily Report (Android).xlsx",
+    "teamsUpdated": 30,
+    "teamsChanged": [
+      {
+        "abbr": "BAL",
+        "name": "Baltimore Orioles",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 6.2,
+          "whip14d": 1.38,
+          "avgReliefIPPerGame": 2.76
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 5.84,
+          "whip14d": 1.4,
+          "avgReliefIPPerGame": 3.08
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CLE",
+        "name": "Cleveland Guardians",
+        "before": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 2.65,
+          "whip14d": 1.51,
+          "avgReliefIPPerGame": 2.09
+        },
+        "after": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 1.83,
+          "whip14d": 1.34,
+          "avgReliefIPPerGame": 1.89
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "KC",
+        "name": "Kansas City Royals",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 3.55,
+          "whip14d": 1.69,
+          "avgReliefIPPerGame": 3.23
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 3.7,
+          "whip14d": 1.67,
+          "avgReliefIPPerGame": 3.1
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "LAA",
+        "name": "Los Angeles Angels",
+        "before": {
+          "grade": "F",
+          "tier": "veryLow",
+          "score": 55,
+          "era14d": 4.41,
+          "whip14d": 1.64,
+          "avgReliefIPPerGame": 2.2
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.42,
+          "whip14d": 1.75,
+          "avgReliefIPPerGame": 2.19
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIN",
+        "name": "Minnesota Twins",
+        "before": {
+          "grade": "B",
+          "tier": "high",
+          "score": 55,
+          "era14d": 1.65,
+          "whip14d": 1.21,
+          "avgReliefIPPerGame": 3.46
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 1.32,
+          "whip14d": 1.09,
+          "avgReliefIPPerGame": 3.1
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TB",
+        "name": "Tampa Bay Rays",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.12,
+          "whip14d": 1.27,
+          "avgReliefIPPerGame": 3.57
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 4.84,
+          "whip14d": 1.37,
+          "avgReliefIPPerGame": 3.38
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TOR",
+        "name": "Toronto Blue Jays",
+        "before": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 3.42,
+          "whip14d": 1.46,
+          "avgReliefIPPerGame": 2.85
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 3.59,
+          "whip14d": 1.46,
+          "avgReliefIPPerGame": 2.89
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CIN",
+        "name": "Cincinnati Reds",
+        "before": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 6.89,
+          "whip14d": 1.51,
+          "avgReliefIPPerGame": 3.68
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 7.31,
+          "whip14d": 1.49,
+          "avgReliefIPPerGame": 2.83
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "COL",
+        "name": "Colorado Rockies",
+        "before": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.14,
+          "whip14d": 1.26,
+          "avgReliefIPPerGame": 3.24
+        },
+        "after": {
+          "grade": "B",
+          "tier": "high",
+          "score": 55,
+          "era14d": 2.44,
+          "whip14d": 1.26,
+          "avgReliefIPPerGame": 3.41
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIA",
+        "name": "Miami Marlins",
+        "before": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 4.06,
+          "whip14d": 1.25,
+          "avgReliefIPPerGame": 2.9
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.55,
+          "whip14d": 1.28,
+          "avgReliefIPPerGame": 3.32
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIL",
+        "name": "Milwaukee Brewers",
+        "before": {
+          "grade": "F",
+          "tier": "moderate",
+          "score": 33,
+          "era14d": 4.86,
+          "whip14d": 1.65,
+          "avgReliefIPPerGame": 2.86
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.98,
+          "whip14d": 1.54,
+          "avgReliefIPPerGame": 2.95
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYM",
+        "name": "New York Mets",
+        "before": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.24,
+          "whip14d": 1.2,
+          "avgReliefIPPerGame": 3.68
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 2.74,
+          "whip14d": 1.31,
+          "avgReliefIPPerGame": 3.56
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "PIT",
+        "name": "Pittsburgh Pirates",
+        "before": {
+          "grade": "F",
+          "tier": "moderate",
+          "score": 33,
+          "era14d": 4.57,
+          "whip14d": 1.58,
+          "avgReliefIPPerGame": 3.12
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.62,
+          "whip14d": 1.51,
+          "avgReliefIPPerGame": 2.93
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SD",
+        "name": "San Diego Padres",
+        "before": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 0.64,
+          "whip14d": 1.05,
+          "avgReliefIPPerGame": 3.5
+        },
+        "after": {
+          "grade": "B",
+          "tier": "high",
+          "score": 55,
+          "era14d": 0.82,
+          "whip14d": 1.17,
+          "avgReliefIPPerGame": 3.65
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "STL",
+        "name": "St. Louis Cardinals",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.15,
+          "whip14d": 1.49,
+          "avgReliefIPPerGame": 3.55
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 3.82,
+          "whip14d": 1.52,
+          "avgReliefIPPerGame": 2.83
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "WSH",
+        "name": "Washington Nationals",
+        "before": {
+          "grade": "C",
+          "tier": "high",
+          "score": 45,
+          "era14d": 4.18,
+          "whip14d": 1.26,
+          "avgReliefIPPerGame": 3.77
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.58,
+          "whip14d": 1.34,
+          "avgReliefIPPerGame": 3.98
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      }
+    ],
+    "teamsUnchanged": 14
+  },
+  {
+    "date": "2026-05-24",
+    "timestamp": "2026-05-24T20:50:19.954Z",
+    "filename": "2026-05-23-UBT Daily Report (Android).xlsx",
+    "teamsUpdated": 30,
+    "teamsChanged": [
+      {
+        "abbr": "CWS",
+        "name": "Chicago White Sox",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.01,
+          "whip14d": 1.21,
+          "avgReliefIPPerGame": 3.37
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 3.44,
+          "whip14d": 1.09,
+          "avgReliefIPPerGame": 3.28
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CLE",
+        "name": "Cleveland Guardians",
+        "before": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 2.47,
+          "whip14d": 1.27,
+          "avgReliefIPPerGame": 2.25
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 2.65,
+          "whip14d": 1.51,
+          "avgReliefIPPerGame": 2.09
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "HOU",
+        "name": "Houston Astros",
+        "before": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.37,
+          "whip14d": 1.21,
+          "avgReliefIPPerGame": 3.45
+        },
+        "after": {
+          "grade": "B",
+          "tier": "high",
+          "score": 55,
+          "era14d": 2.31,
+          "whip14d": 1.21,
+          "avgReliefIPPerGame": 3.54
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "KC",
+        "name": "Kansas City Royals",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 3.45,
+          "whip14d": 1.64,
+          "avgReliefIPPerGame": 3.04
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 3.55,
+          "whip14d": 1.69,
+          "avgReliefIPPerGame": 3.23
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIN",
+        "name": "Minnesota Twins",
+        "before": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 1.7,
+          "whip14d": 1.21,
+          "avgReliefIPPerGame": 3.85
+        },
+        "after": {
+          "grade": "B",
+          "tier": "high",
+          "score": 55,
+          "era14d": 1.65,
+          "whip14d": 1.21,
+          "avgReliefIPPerGame": 3.46
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYY",
+        "name": "New York Yankees",
+        "before": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 6.02,
+          "whip14d": 1.7,
+          "avgReliefIPPerGame": 2.76
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 5.66,
+          "whip14d": 1.65,
+          "avgReliefIPPerGame": 2.78
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SEA",
+        "name": "Seattle Mariners",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 2.29,
+          "whip14d": 1.45,
+          "avgReliefIPPerGame": 2.12
+        },
+        "after": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 2.21,
+          "whip14d": 1.44,
+          "avgReliefIPPerGame": 2.19
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TOR",
+        "name": "Toronto Blue Jays",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 3.61,
+          "whip14d": 1.43,
+          "avgReliefIPPerGame": 2.91
+        },
+        "after": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 3.42,
+          "whip14d": 1.46,
+          "avgReliefIPPerGame": 2.85
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CIN",
+        "name": "Cincinnati Reds",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 6.32,
+          "whip14d": 1.29,
+          "avgReliefIPPerGame": 3.11
+        },
+        "after": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 6.89,
+          "whip14d": 1.51,
+          "avgReliefIPPerGame": 3.68
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "COL",
+        "name": "Colorado Rockies",
+        "before": {
+          "grade": "B",
+          "tier": "high",
+          "score": 55,
+          "era14d": 2.26,
+          "whip14d": 1.2,
+          "avgReliefIPPerGame": 3.32
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.14,
+          "whip14d": 1.26,
+          "avgReliefIPPerGame": 3.24
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIL",
+        "name": "Milwaukee Brewers",
+        "before": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 2.9,
+          "whip14d": 1.36,
+          "avgReliefIPPerGame": 2.82
+        },
+        "after": {
+          "grade": "F",
+          "tier": "moderate",
+          "score": 33,
+          "era14d": 4.86,
+          "whip14d": 1.65,
+          "avgReliefIPPerGame": 2.86
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYM",
+        "name": "New York Mets",
+        "before": {
+          "grade": "C",
+          "tier": "high",
+          "score": 45,
+          "era14d": 2.79,
+          "whip14d": 1.24,
+          "avgReliefIPPerGame": 4.03
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.24,
+          "whip14d": 1.2,
+          "avgReliefIPPerGame": 3.68
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SF",
+        "name": "San Francisco Giants",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 3.72,
+          "whip14d": 1.42,
+          "avgReliefIPPerGame": 2.61
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.41,
+          "whip14d": 1.2,
+          "avgReliefIPPerGame": 2.88
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "STL",
+        "name": "St. Louis Cardinals",
+        "before": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.82,
+          "whip14d": 1.55,
+          "avgReliefIPPerGame": 3.05
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.15,
+          "whip14d": 1.49,
+          "avgReliefIPPerGame": 3.55
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "WSH",
+        "name": "Washington Nationals",
+        "before": {
+          "grade": "D",
+          "tier": "high",
+          "score": 33,
+          "era14d": 5.29,
+          "whip14d": 1.45,
+          "avgReliefIPPerGame": 3.68
+        },
+        "after": {
+          "grade": "C",
+          "tier": "high",
+          "score": 45,
+          "era14d": 4.18,
+          "whip14d": 1.26,
+          "avgReliefIPPerGame": 3.77
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      }
+    ],
+    "teamsUnchanged": 15
+  },
+  {
+    "date": "2026-05-23",
+    "timestamp": "2026-05-23T13:28:58.812Z",
+    "filename": "2026-05-22-UBT Daily Report (Android).xlsx",
+    "teamsUpdated": 30,
+    "teamsChanged": [
+      {
+        "abbr": "CWS",
+        "name": "Chicago White Sox",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 5.2,
+          "whip14d": 1.3,
+          "avgReliefIPPerGame": 3.46
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.01,
+          "whip14d": 1.21,
+          "avgReliefIPPerGame": 3.37
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CLE",
+        "name": "Cleveland Guardians",
+        "before": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 2.62,
+          "whip14d": 1.49,
+          "avgReliefIPPerGame": 2.12
+        },
+        "after": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 2.47,
+          "whip14d": 1.27,
+          "avgReliefIPPerGame": 2.25
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "DET",
+        "name": "Detroit Tigers",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 4.52,
+          "whip14d": 1.4,
+          "avgReliefIPPerGame": 3.82
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.84,
+          "whip14d": 1.3,
+          "avgReliefIPPerGame": 3.61
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "HOU",
+        "name": "Houston Astros",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 2.82,
+          "whip14d": 1.33,
+          "avgReliefIPPerGame": 3.77
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.37,
+          "whip14d": 1.21,
+          "avgReliefIPPerGame": 3.45
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIN",
+        "name": "Minnesota Twins",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 2.03,
+          "whip14d": 1.4,
+          "avgReliefIPPerGame": 3.32
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 1.7,
+          "whip14d": 1.21,
+          "avgReliefIPPerGame": 3.85
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYY",
+        "name": "New York Yankees",
+        "before": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.77,
+          "whip14d": 1.56,
+          "avgReliefIPPerGame": 3.14
+        },
+        "after": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 6.02,
+          "whip14d": 1.7,
+          "avgReliefIPPerGame": 2.76
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SEA",
+        "name": "Seattle Mariners",
+        "before": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 3.07,
+          "whip14d": 1.59,
+          "avgReliefIPPerGame": 2.03
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 2.29,
+          "whip14d": 1.45,
+          "avgReliefIPPerGame": 2.12
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TB",
+        "name": "Tampa Bay Rays",
+        "before": {
+          "grade": "C",
+          "tier": "veryHigh",
+          "score": 35,
+          "era14d": 4,
+          "whip14d": 1.22,
+          "avgReliefIPPerGame": 4.09
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.12,
+          "whip14d": 1.27,
+          "avgReliefIPPerGame": 3.57
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TEX",
+        "name": "Texas Rangers",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.06,
+          "whip14d": 1.17,
+          "avgReliefIPPerGame": 2.7
+        },
+        "after": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 3,
+          "whip14d": 0.93,
+          "avgReliefIPPerGame": 2.73
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TOR",
+        "name": "Toronto Blue Jays",
+        "before": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 3.82,
+          "whip14d": 1.51,
+          "avgReliefIPPerGame": 2.78
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 3.61,
+          "whip14d": 1.43,
+          "avgReliefIPPerGame": 2.91
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "ARI",
+        "name": "Arizona Diamondbacks",
+        "before": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 2.05,
+          "whip14d": 1.19,
+          "avgReliefIPPerGame": 1.83
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 3.25,
+          "whip14d": 1.6,
+          "avgReliefIPPerGame": 1.62
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "ATL",
+        "name": "Atlanta Braves",
+        "before": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 1.49,
+          "whip14d": 0.95,
+          "avgReliefIPPerGame": 2.68
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 1.84,
+          "whip14d": 1.03,
+          "avgReliefIPPerGame": 2.93
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "COL",
+        "name": "Colorado Rockies",
+        "before": {
+          "grade": "D",
+          "tier": "veryHigh",
+          "score": 23,
+          "era14d": 4.25,
+          "whip14d": 1.42,
+          "avgReliefIPPerGame": 3.58
+        },
+        "after": {
+          "grade": "B",
+          "tier": "high",
+          "score": 55,
+          "era14d": 2.26,
+          "whip14d": 1.2,
+          "avgReliefIPPerGame": 3.32
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "LAD",
+        "name": "Los Angeles Dodgers",
+        "before": {
+          "grade": "B",
+          "tier": "low",
+          "score": 80,
+          "era14d": 2.35,
+          "whip14d": 1.27,
+          "avgReliefIPPerGame": 2.65
+        },
+        "after": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 2.35,
+          "whip14d": 1.22,
+          "avgReliefIPPerGame": 2.65
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIA",
+        "name": "Miami Marlins",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.62,
+          "whip14d": 1.16,
+          "avgReliefIPPerGame": 3.06
+        },
+        "after": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 4.42,
+          "whip14d": 1.27,
+          "avgReliefIPPerGame": 2.98
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYM",
+        "name": "New York Mets",
+        "before": {
+          "grade": "D",
+          "tier": "veryHigh",
+          "score": 23,
+          "era14d": 3.75,
+          "whip14d": 1.43,
+          "avgReliefIPPerGame": 4.2
+        },
+        "after": {
+          "grade": "C",
+          "tier": "high",
+          "score": 45,
+          "era14d": 2.79,
+          "whip14d": 1.24,
+          "avgReliefIPPerGame": 4.03
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "PHI",
+        "name": "Philadelphia Phillies",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.2,
+          "whip14d": 1.18,
+          "avgReliefIPPerGame": 3.39
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 4.26,
+          "whip14d": 1.18,
+          "avgReliefIPPerGame": 2.69
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SD",
+        "name": "San Diego Padres",
+        "before": {
+          "grade": "B",
+          "tier": "high",
+          "score": 55,
+          "era14d": 1,
+          "whip14d": 1.17,
+          "avgReliefIPPerGame": 3.48
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 0.87,
+          "whip14d": 1.09,
+          "avgReliefIPPerGame": 3.44
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "STL",
+        "name": "St. Louis Cardinals",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.88,
+          "whip14d": 1.32,
+          "avgReliefIPPerGame": 3.09
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.82,
+          "whip14d": 1.55,
+          "avgReliefIPPerGame": 3.05
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      }
+    ],
+    "teamsUnchanged": 11
+  },
+  {
+    "date": "2026-05-21",
+    "timestamp": "2026-05-21T13:20:26.341Z",
+    "filename": "2026-05-20-UBT Daily Report (Android).xlsx",
+    "teamsUpdated": 30,
+    "teamsChanged": [
+      {
+        "abbr": "OAK",
+        "name": "Athletics",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 5.14,
+          "whip14d": 1.47,
+          "avgReliefIPPerGame": 3.03
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.16,
+          "whip14d": 1.28,
+          "avgReliefIPPerGame": 3.35
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "BAL",
+        "name": "Baltimore Orioles",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.3,
+          "whip14d": 1.34,
+          "avgReliefIPPerGame": 2.85
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 5.59,
+          "whip14d": 1.5,
+          "avgReliefIPPerGame": 2.78
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "CWS",
+        "name": "Chicago White Sox",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.68,
+          "whip14d": 1.31,
+          "avgReliefIPPerGame": 3.37
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 5.2,
+          "whip14d": 1.3,
+          "avgReliefIPPerGame": 3.46
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "DET",
+        "name": "Detroit Tigers",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.75,
+          "whip14d": 1.48,
+          "avgReliefIPPerGame": 3.32
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 4.52,
+          "whip14d": 1.4,
+          "avgReliefIPPerGame": 3.82
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "HOU",
+        "name": "Houston Astros",
+        "before": {
+          "grade": "D",
+          "tier": "veryHigh",
+          "score": 23,
+          "era14d": 3.63,
+          "whip14d": 1.48,
+          "avgReliefIPPerGame": 4.05
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 2.82,
+          "whip14d": 1.33,
+          "avgReliefIPPerGame": 3.77
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "KC",
+        "name": "Kansas City Royals",
+        "before": {
+          "grade": "D",
+          "tier": "high",
+          "score": 33,
+          "era14d": 2.96,
+          "whip14d": 1.6,
+          "avgReliefIPPerGame": 3.28
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 2.88,
+          "whip14d": 1.65,
+          "avgReliefIPPerGame": 3.12
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "LAA",
+        "name": "Los Angeles Angels",
+        "before": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 6.34,
+          "whip14d": 1.61,
+          "avgReliefIPPerGame": 2.48
+        },
+        "after": {
+          "grade": "F",
+          "tier": "veryLow",
+          "score": 55,
+          "era14d": 5,
+          "whip14d": 1.51,
+          "avgReliefIPPerGame": 2.1
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIN",
+        "name": "Minnesota Twins",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 2.9,
+          "whip14d": 1.58,
+          "avgReliefIPPerGame": 3.11
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 2.03,
+          "whip14d": 1.4,
+          "avgReliefIPPerGame": 3.32
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYY",
+        "name": "New York Yankees",
+        "before": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 5.01,
+          "whip14d": 1.67,
+          "avgReliefIPPerGame": 2.99
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.77,
+          "whip14d": 1.56,
+          "avgReliefIPPerGame": 3.14
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SEA",
+        "name": "Seattle Mariners",
+        "before": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 3.19,
+          "whip14d": 1.5,
+          "avgReliefIPPerGame": 1.95
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 3.07,
+          "whip14d": 1.59,
+          "avgReliefIPPerGame": 2.03
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TOR",
+        "name": "Toronto Blue Jays",
+        "before": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 3.04,
+          "whip14d": 1.44,
+          "avgReliefIPPerGame": 2.96
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 3.82,
+          "whip14d": 1.51,
+          "avgReliefIPPerGame": 2.78
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "ATL",
+        "name": "Atlanta Braves",
+        "before": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 1.86,
+          "whip14d": 1.11,
+          "avgReliefIPPerGame": 2.69
+        },
+        "after": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 1.49,
+          "whip14d": 0.95,
+          "avgReliefIPPerGame": 2.68
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CIN",
+        "name": "Cincinnati Reds",
+        "before": {
+          "grade": "F",
+          "tier": "moderate",
+          "score": 33,
+          "era14d": 7.91,
+          "whip14d": 1.58,
+          "avgReliefIPPerGame": 2.98
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 7.77,
+          "whip14d": 1.45,
+          "avgReliefIPPerGame": 3.03
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "COL",
+        "name": "Colorado Rockies",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 5.34,
+          "whip14d": 1.5,
+          "avgReliefIPPerGame": 3.89
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryHigh",
+          "score": 23,
+          "era14d": 4.25,
+          "whip14d": 1.42,
+          "avgReliefIPPerGame": 3.58
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "LAD",
+        "name": "Los Angeles Dodgers",
+        "before": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 2.54,
+          "whip14d": 1.27,
+          "avgReliefIPPerGame": 2.73
+        },
+        "after": {
+          "grade": "B",
+          "tier": "low",
+          "score": 80,
+          "era14d": 2.35,
+          "whip14d": 1.27,
+          "avgReliefIPPerGame": 2.65
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIL",
+        "name": "Milwaukee Brewers",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.1,
+          "whip14d": 1.21,
+          "avgReliefIPPerGame": 3.16
+        },
+        "after": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 2.83,
+          "whip14d": 1.23,
+          "avgReliefIPPerGame": 2.89
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYM",
+        "name": "New York Mets",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.39,
+          "whip14d": 1.49,
+          "avgReliefIPPerGame": 3.68
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryHigh",
+          "score": 23,
+          "era14d": 3.75,
+          "whip14d": 1.43,
+          "avgReliefIPPerGame": 4.2
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "PIT",
+        "name": "Pittsburgh Pirates",
+        "before": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 5.09,
+          "whip14d": 1.7,
+          "avgReliefIPPerGame": 2.8
+        },
+        "after": {
+          "grade": "F",
+          "tier": "moderate",
+          "score": 33,
+          "era14d": 4.46,
+          "whip14d": 1.54,
+          "avgReliefIPPerGame": 2.86
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "STL",
+        "name": "St. Louis Cardinals",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.36,
+          "whip14d": 1.29,
+          "avgReliefIPPerGame": 2.9
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.88,
+          "whip14d": 1.32,
+          "avgReliefIPPerGame": 3.09
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      }
+    ],
+    "teamsUnchanged": 11
+  },
+  {
+    "date": "2026-05-20",
+    "timestamp": "2026-05-20T14:48:11.127Z",
+    "filename": "2026-05-19-UBT Daily Report (Android).xlsx",
+    "teamsUpdated": 30,
+    "teamsChanged": [
+      {
+        "abbr": "OAK",
+        "name": "Athletics",
+        "before": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 6.43,
+          "whip14d": 1.7,
+          "avgReliefIPPerGame": 2.67
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 5.14,
+          "whip14d": 1.47,
+          "avgReliefIPPerGame": 3.03
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "BAL",
+        "name": "Baltimore Orioles",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.97,
+          "whip14d": 1.48,
+          "avgReliefIPPerGame": 3.13
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.3,
+          "whip14d": 1.34,
+          "avgReliefIPPerGame": 2.85
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "BOS",
+        "name": "Boston Red Sox",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.21,
+          "whip14d": 1.27,
+          "avgReliefIPPerGame": 2.57
+        },
+        "after": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 2.38,
+          "whip14d": 1.06,
+          "avgReliefIPPerGame": 2.83
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CWS",
+        "name": "Chicago White Sox",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 4.81,
+          "whip14d": 1.35,
+          "avgReliefIPPerGame": 3.28
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.68,
+          "whip14d": 1.31,
+          "avgReliefIPPerGame": 3.37
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CLE",
+        "name": "Cleveland Guardians",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.17,
+          "whip14d": 1.25,
+          "avgReliefIPPerGame": 2.4
+        },
+        "after": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 2.44,
+          "whip14d": 1.39,
+          "avgReliefIPPerGame": 2.27
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "DET",
+        "name": "Detroit Tigers",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 4.64,
+          "whip14d": 1.5,
+          "avgReliefIPPerGame": 3.23
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.75,
+          "whip14d": 1.48,
+          "avgReliefIPPerGame": 3.32
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "HOU",
+        "name": "Houston Astros",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 4.23,
+          "whip14d": 1.57,
+          "avgReliefIPPerGame": 3.48
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryHigh",
+          "score": 23,
+          "era14d": 3.63,
+          "whip14d": 1.48,
+          "avgReliefIPPerGame": 4.05
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "KC",
+        "name": "Kansas City Royals",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 2.63,
+          "whip14d": 1.54,
+          "avgReliefIPPerGame": 2.89
+        },
+        "after": {
+          "grade": "D",
+          "tier": "high",
+          "score": 33,
+          "era14d": 2.96,
+          "whip14d": 1.6,
+          "avgReliefIPPerGame": 3.28
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "LAA",
+        "name": "Los Angeles Angels",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.8,
+          "whip14d": 1.43,
+          "avgReliefIPPerGame": 2.5
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 6.34,
+          "whip14d": 1.61,
+          "avgReliefIPPerGame": 2.48
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIN",
+        "name": "Minnesota Twins",
+        "before": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 4.76,
+          "whip14d": 1.87,
+          "avgReliefIPPerGame": 2.99
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 2.9,
+          "whip14d": 1.58,
+          "avgReliefIPPerGame": 3.11
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SEA",
+        "name": "Seattle Mariners",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.32,
+          "whip14d": 1.4,
+          "avgReliefIPPerGame": 2.08
+        },
+        "after": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 3.19,
+          "whip14d": 1.5,
+          "avgReliefIPPerGame": 1.95
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TB",
+        "name": "Tampa Bay Rays",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 4.32,
+          "whip14d": 1.39,
+          "avgReliefIPPerGame": 3.98
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryHigh",
+          "score": 35,
+          "era14d": 3.95,
+          "whip14d": 1.28,
+          "avgReliefIPPerGame": 4.55
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TEX",
+        "name": "Texas Rangers",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 4.17,
+          "whip14d": 1.39,
+          "avgReliefIPPerGame": 2.65
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.37,
+          "whip14d": 1.29,
+          "avgReliefIPPerGame": 2.45
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TOR",
+        "name": "Toronto Blue Jays",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.32,
+          "whip14d": 1.47,
+          "avgReliefIPPerGame": 3.17
+        },
+        "after": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 3.04,
+          "whip14d": 1.44,
+          "avgReliefIPPerGame": 2.96
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CHC",
+        "name": "Chicago Cubs",
+        "before": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.67,
+          "whip14d": 1.14,
+          "avgReliefIPPerGame": 3.38
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.45,
+          "whip14d": 1.3,
+          "avgReliefIPPerGame": 3.61
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "COL",
+        "name": "Colorado Rockies",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.16,
+          "whip14d": 1.27,
+          "avgReliefIPPerGame": 3.61
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 5.34,
+          "whip14d": 1.5,
+          "avgReliefIPPerGame": 3.89
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "LAD",
+        "name": "Los Angeles Dodgers",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 2.74,
+          "whip14d": 1.25,
+          "avgReliefIPPerGame": 2.53
+        },
+        "after": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 2.54,
+          "whip14d": 1.27,
+          "avgReliefIPPerGame": 2.73
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIA",
+        "name": "Miami Marlins",
+        "before": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 3.14,
+          "whip14d": 1.02,
+          "avgReliefIPPerGame": 2.87
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.91,
+          "whip14d": 1.17,
+          "avgReliefIPPerGame": 3.07
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIL",
+        "name": "Milwaukee Brewers",
+        "before": {
+          "grade": "B",
+          "tier": "low",
+          "score": 80,
+          "era14d": 2.76,
+          "whip14d": 1.13,
+          "avgReliefIPPerGame": 3.26
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.1,
+          "whip14d": 1.21,
+          "avgReliefIPPerGame": 3.16
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYM",
+        "name": "New York Mets",
+        "before": {
+          "grade": "D",
+          "tier": "high",
+          "score": 33,
+          "era14d": 3.54,
+          "whip14d": 1.53,
+          "avgReliefIPPerGame": 3.81
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.39,
+          "whip14d": 1.49,
+          "avgReliefIPPerGame": 3.68
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SD",
+        "name": "San Diego Padres",
+        "before": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 0.79,
+          "whip14d": 0.99,
+          "avgReliefIPPerGame": 3.51
+        },
+        "after": {
+          "grade": "B",
+          "tier": "high",
+          "score": 55,
+          "era14d": 0.79,
+          "whip14d": 1.03,
+          "avgReliefIPPerGame": 3.52
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "WSH",
+        "name": "Washington Nationals",
+        "before": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 4.82,
+          "whip14d": 1.53,
+          "avgReliefIPPerGame": 3.43
+        },
+        "after": {
+          "grade": "D",
+          "tier": "high",
+          "score": 33,
+          "era14d": 4.7,
+          "whip14d": 1.45,
+          "avgReliefIPPerGame": 3.51
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      }
+    ],
+    "teamsUnchanged": 8
+  },
+  {
+    "date": "2026-05-19",
+    "timestamp": "2026-05-19T17:40:45.189Z",
+    "filename": "2026-05-18-UBT Daily Report (Android).xlsx",
+    "teamsUpdated": 30,
+    "teamsChanged": [
+      {
+        "abbr": "BAL",
+        "name": "Baltimore Orioles",
+        "before": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 4.33,
+          "whip14d": 1.33,
+          "avgReliefIPPerGame": 3.53
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.97,
+          "whip14d": 1.48,
+          "avgReliefIPPerGame": 3.13
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CWS",
+        "name": "Chicago White Sox",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.37,
+          "whip14d": 1.32,
+          "avgReliefIPPerGame": 3.37
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 4.81,
+          "whip14d": 1.35,
+          "avgReliefIPPerGame": 3.28
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CLE",
+        "name": "Cleveland Guardians",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.38,
+          "whip14d": 1.31,
+          "avgReliefIPPerGame": 2.67
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.17,
+          "whip14d": 1.25,
+          "avgReliefIPPerGame": 2.4
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "DET",
+        "name": "Detroit Tigers",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.06,
+          "whip14d": 1.44,
+          "avgReliefIPPerGame": 3.23
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 4.64,
+          "whip14d": 1.5,
+          "avgReliefIPPerGame": 3.23
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "KC",
+        "name": "Kansas City Royals",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 2.6,
+          "whip14d": 1.53,
+          "avgReliefIPPerGame": 2.88
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 2.63,
+          "whip14d": 1.54,
+          "avgReliefIPPerGame": 2.89
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "LAA",
+        "name": "Los Angeles Angels",
+        "before": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 4.87,
+          "whip14d": 1.37,
+          "avgReliefIPPerGame": 2.52
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.8,
+          "whip14d": 1.43,
+          "avgReliefIPPerGame": 2.5
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIN",
+        "name": "Minnesota Twins",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 3.97,
+          "whip14d": 1.68,
+          "avgReliefIPPerGame": 3.3
+        },
+        "after": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 4.76,
+          "whip14d": 1.87,
+          "avgReliefIPPerGame": 2.99
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYY",
+        "name": "New York Yankees",
+        "before": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 5.03,
+          "whip14d": 1.61,
+          "avgReliefIPPerGame": 2.6
+        },
+        "after": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 5,
+          "whip14d": 1.67,
+          "avgReliefIPPerGame": 3
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SEA",
+        "name": "Seattle Mariners",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 2.7,
+          "whip14d": 1.4,
+          "avgReliefIPPerGame": 2.5
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.32,
+          "whip14d": 1.4,
+          "avgReliefIPPerGame": 2.08
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TB",
+        "name": "Tampa Bay Rays",
+        "before": {
+          "grade": "C",
+          "tier": "high",
+          "score": 45,
+          "era14d": 4.41,
+          "whip14d": 1.33,
+          "avgReliefIPPerGame": 4.29
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 4.32,
+          "whip14d": 1.39,
+          "avgReliefIPPerGame": 3.98
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "TEX",
+        "name": "Texas Rangers",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 3.99,
+          "whip14d": 1.47,
+          "avgReliefIPPerGame": 2.44
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 4.17,
+          "whip14d": 1.39,
+          "avgReliefIPPerGame": 2.65
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "ATL",
+        "name": "Atlanta Braves",
+        "before": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 1.88,
+          "whip14d": 0.92,
+          "avgReliefIPPerGame": 2.4
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 3.67,
+          "whip14d": 1.15,
+          "avgReliefIPPerGame": 2.45
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "COL",
+        "name": "Colorado Rockies",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.63,
+          "whip14d": 1.3,
+          "avgReliefIPPerGame": 3.22
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.16,
+          "whip14d": 1.27,
+          "avgReliefIPPerGame": 3.61
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIL",
+        "name": "Milwaukee Brewers",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.16,
+          "whip14d": 1.16,
+          "avgReliefIPPerGame": 3.17
+        },
+        "after": {
+          "grade": "B",
+          "tier": "low",
+          "score": 80,
+          "era14d": 2.76,
+          "whip14d": 1.13,
+          "avgReliefIPPerGame": 3.26
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "NYM",
+        "name": "New York Mets",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 3.75,
+          "whip14d": 1.46,
+          "avgReliefIPPerGame": 3.49
+        },
+        "after": {
+          "grade": "D",
+          "tier": "high",
+          "score": 33,
+          "era14d": 3.54,
+          "whip14d": 1.53,
+          "avgReliefIPPerGame": 3.81
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "PHI",
+        "name": "Philadelphia Phillies",
+        "before": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 2.8,
+          "whip14d": 1.16,
+          "avgReliefIPPerGame": 3.21
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.11,
+          "whip14d": 1.2,
+          "avgReliefIPPerGame": 3.13
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SF",
+        "name": "San Francisco Giants",
+        "before": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 4.12,
+          "whip14d": 1.44,
+          "avgReliefIPPerGame": 2.37
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 3.99,
+          "whip14d": 1.46,
+          "avgReliefIPPerGame": 2.43
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "WSH",
+        "name": "Washington Nationals",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 3.97,
+          "whip14d": 1.5,
+          "avgReliefIPPerGame": 3.09
+        },
+        "after": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 4.82,
+          "whip14d": 1.53,
+          "avgReliefIPPerGame": 3.43
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      }
+    ],
+    "teamsUnchanged": 12
+  },
+  {
+    "date": "2026-05-19",
+    "timestamp": "2026-05-19T14:05:58.387Z",
+    "filename": "2026-05-17-UBT Daily Report (Android).xlsx",
+    "teamsUpdated": 30,
+    "teamsChanged": [
+      {
+        "abbr": "OAK",
+        "name": "Athletics",
+        "before": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 4.74,
+          "whip14d": 1.41,
+          "avgReliefIPPerGame": 2.76
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 6.43,
+          "whip14d": 1.7,
+          "avgReliefIPPerGame": 2.67
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "BAL",
+        "name": "Baltimore Orioles",
+        "before": {
+          "grade": "F",
+          "tier": "veryLow",
+          "score": 55,
+          "era14d": 6.23,
+          "whip14d": 1.58,
+          "avgReliefIPPerGame": 3.01
+        },
+        "after": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 4.33,
+          "whip14d": 1.33,
+          "avgReliefIPPerGame": 3.53
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "BOS",
+        "name": "Boston Red Sox",
+        "before": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.3,
+          "whip14d": 1.56,
+          "avgReliefIPPerGame": 2.62
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.56,
+          "whip14d": 1.37,
+          "avgReliefIPPerGame": 2.53
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CWS",
+        "name": "Chicago White Sox",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 4.49,
+          "whip14d": 1.29,
+          "avgReliefIPPerGame": 2.84
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.37,
+          "whip14d": 1.32,
+          "avgReliefIPPerGame": 3.37
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CLE",
+        "name": "Cleveland Guardians",
+        "before": {
+          "grade": "D",
+          "tier": "high",
+          "score": 33,
+          "era14d": 3.95,
+          "whip14d": 1.4,
+          "avgReliefIPPerGame": 2.63
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.38,
+          "whip14d": 1.31,
+          "avgReliefIPPerGame": 2.67
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "DET",
+        "name": "Detroit Tigers",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 3.68,
+          "whip14d": 1.46,
+          "avgReliefIPPerGame": 3.47
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.06,
+          "whip14d": 1.44,
+          "avgReliefIPPerGame": 3.23
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "HOU",
+        "name": "Houston Astros",
+        "before": {
+          "grade": "C",
+          "tier": "veryHigh",
+          "score": 35,
+          "era14d": 2.77,
+          "whip14d": 1.46,
+          "avgReliefIPPerGame": 3.75
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 3.67,
+          "whip14d": 1.43,
+          "avgReliefIPPerGame": 3.27
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIN",
+        "name": "Minnesota Twins",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 3.94,
+          "whip14d": 1.63,
+          "avgReliefIPPerGame": 3.74
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 3.97,
+          "whip14d": 1.68,
+          "avgReliefIPPerGame": 3.3
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYY",
+        "name": "New York Yankees",
+        "before": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 3.34,
+          "whip14d": 1.42,
+          "avgReliefIPPerGame": 2.47
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 5.03,
+          "whip14d": 1.61,
+          "avgReliefIPPerGame": 2.6
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SEA",
+        "name": "Seattle Mariners",
+        "before": {
+          "grade": "B",
+          "tier": "low",
+          "score": 80,
+          "era14d": 1.97,
+          "whip14d": 1.32,
+          "avgReliefIPPerGame": 2.45
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 2.7,
+          "whip14d": 1.4,
+          "avgReliefIPPerGame": 2.5
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "TB",
+        "name": "Tampa Bay Rays",
+        "before": {
+          "grade": "C",
+          "tier": "veryHigh",
+          "score": 35,
+          "era14d": 3.83,
+          "whip14d": 1.28,
+          "avgReliefIPPerGame": 4.27
+        },
+        "after": {
+          "grade": "C",
+          "tier": "high",
+          "score": 45,
+          "era14d": 4.41,
+          "whip14d": 1.33,
+          "avgReliefIPPerGame": 4.29
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TEX",
+        "name": "Texas Rangers",
+        "before": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.75,
+          "whip14d": 1.62,
+          "avgReliefIPPerGame": 2.37
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 3.99,
+          "whip14d": 1.47,
+          "avgReliefIPPerGame": 2.44
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "ATL",
+        "name": "Atlanta Braves",
+        "before": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.85,
+          "whip14d": 1.09,
+          "avgReliefIPPerGame": 2.58
+        },
+        "after": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 1.88,
+          "whip14d": 0.92,
+          "avgReliefIPPerGame": 2.4
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CIN",
+        "name": "Cincinnati Reds",
+        "before": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 8.07,
+          "whip14d": 1.85,
+          "avgReliefIPPerGame": 2.92
+        },
+        "after": {
+          "grade": "F",
+          "tier": "moderate",
+          "score": 33,
+          "era14d": 8.18,
+          "whip14d": 1.71,
+          "avgReliefIPPerGame": 3.12
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "COL",
+        "name": "Colorado Rockies",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.83,
+          "whip14d": 1.21,
+          "avgReliefIPPerGame": 3.72
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.63,
+          "whip14d": 1.3,
+          "avgReliefIPPerGame": 3.22
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "LAD",
+        "name": "Los Angeles Dodgers",
+        "before": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 2.08,
+          "whip14d": 1.09,
+          "avgReliefIPPerGame": 3.33
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 2.58,
+          "whip14d": 1.21,
+          "avgReliefIPPerGame": 2.91
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIA",
+        "name": "Miami Marlins",
+        "before": {
+          "grade": "B",
+          "tier": "low",
+          "score": 80,
+          "era14d": 2.7,
+          "whip14d": 0.98,
+          "avgReliefIPPerGame": 3.06
+        },
+        "after": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 3.44,
+          "whip14d": 1.05,
+          "avgReliefIPPerGame": 2.85
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYM",
+        "name": "New York Mets",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.11,
+          "whip14d": 1.31,
+          "avgReliefIPPerGame": 3.38
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 3.75,
+          "whip14d": 1.46,
+          "avgReliefIPPerGame": 3.49
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "PHI",
+        "name": "Philadelphia Phillies",
+        "before": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.57,
+          "whip14d": 1.12,
+          "avgReliefIPPerGame": 3.21
+        },
+        "after": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 2.8,
+          "whip14d": 1.16,
+          "avgReliefIPPerGame": 3.21
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SF",
+        "name": "San Francisco Giants",
+        "before": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.26,
+          "whip14d": 1.55,
+          "avgReliefIPPerGame": 2.28
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 4.12,
+          "whip14d": 1.44,
+          "avgReliefIPPerGame": 2.37
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "STL",
+        "name": "St. Louis Cardinals",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.68,
+          "whip14d": 1.35,
+          "avgReliefIPPerGame": 2.65
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.26,
+          "whip14d": 1.25,
+          "avgReliefIPPerGame": 2.76
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "WSH",
+        "name": "Washington Nationals",
+        "before": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 3.31,
+          "whip14d": 1.42,
+          "avgReliefIPPerGame": 3.21
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 3.97,
+          "whip14d": 1.5,
+          "avgReliefIPPerGame": 3.09
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      }
+    ],
+    "teamsUnchanged": 8
+  },
+  {
+    "date": "2026-05-17",
+    "timestamp": "2026-05-17T22:02:01.471Z",
+    "filename": "2026-05-16-UBT Daily Report (Android).xlsx",
+    "teamsUpdated": 30,
+    "teamsChanged": [
+      {
+        "abbr": "BAL",
+        "name": "Baltimore Orioles",
+        "before": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 4.26,
+          "whip14d": 1.39,
+          "avgReliefIPPerGame": 3.07
+        },
+        "after": {
+          "grade": "F",
+          "tier": "veryLow",
+          "score": 55,
+          "era14d": 6.23,
+          "whip14d": 1.58,
+          "avgReliefIPPerGame": 3.01
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CWS",
+        "name": "Chicago White Sox",
+        "before": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 4.86,
+          "whip14d": 1.32,
+          "avgReliefIPPerGame": 3.03
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 4.49,
+          "whip14d": 1.29,
+          "avgReliefIPPerGame": 2.84
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CLE",
+        "name": "Cleveland Guardians",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.37,
+          "whip14d": 1.49,
+          "avgReliefIPPerGame": 2.58
+        },
+        "after": {
+          "grade": "D",
+          "tier": "high",
+          "score": 33,
+          "era14d": 3.95,
+          "whip14d": 1.4,
+          "avgReliefIPPerGame": 2.63
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "DET",
+        "name": "Detroit Tigers",
+        "before": {
+          "grade": "D",
+          "tier": "veryHigh",
+          "score": 23,
+          "era14d": 3.68,
+          "whip14d": 1.48,
+          "avgReliefIPPerGame": 4
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 3.68,
+          "whip14d": 1.46,
+          "avgReliefIPPerGame": 3.47
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "HOU",
+        "name": "Houston Astros",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.07,
+          "whip14d": 1.39,
+          "avgReliefIPPerGame": 3.43
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryHigh",
+          "score": 35,
+          "era14d": 2.77,
+          "whip14d": 1.46,
+          "avgReliefIPPerGame": 3.75
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "KC",
+        "name": "Kansas City Royals",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 2.76,
+          "whip14d": 1.5,
+          "avgReliefIPPerGame": 2.99
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 2.59,
+          "whip14d": 1.53,
+          "avgReliefIPPerGame": 2.67
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "MIN",
+        "name": "Minnesota Twins",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.25,
+          "whip14d": 1.68,
+          "avgReliefIPPerGame": 3.81
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 3.94,
+          "whip14d": 1.63,
+          "avgReliefIPPerGame": 3.74
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYY",
+        "name": "New York Yankees",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 2.58,
+          "whip14d": 1.33,
+          "avgReliefIPPerGame": 2.54
+        },
+        "after": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 3.34,
+          "whip14d": 1.42,
+          "avgReliefIPPerGame": 2.47
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SEA",
+        "name": "Seattle Mariners",
+        "before": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 2.11,
+          "whip14d": 1.27,
+          "avgReliefIPPerGame": 2.48
+        },
+        "after": {
+          "grade": "B",
+          "tier": "low",
+          "score": 80,
+          "era14d": 1.97,
+          "whip14d": 1.32,
+          "avgReliefIPPerGame": 2.45
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TB",
+        "name": "Tampa Bay Rays",
+        "before": {
+          "grade": "B",
+          "tier": "high",
+          "score": 55,
+          "era14d": 2.3,
+          "whip14d": 1.12,
+          "avgReliefIPPerGame": 4.3
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryHigh",
+          "score": 35,
+          "era14d": 3.83,
+          "whip14d": 1.28,
+          "avgReliefIPPerGame": 4.27
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TOR",
+        "name": "Toronto Blue Jays",
+        "before": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 3.62,
+          "whip14d": 1.52,
+          "avgReliefIPPerGame": 3.16
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.06,
+          "whip14d": 1.4,
+          "avgReliefIPPerGame": 3.68
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "ARI",
+        "name": "Arizona Diamondbacks",
+        "before": {
+          "grade": "A",
+          "tier": "veryLow",
+          "score": 100,
+          "era14d": 2.29,
+          "whip14d": 0.89,
+          "avgReliefIPPerGame": 1.57
+        },
+        "after": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 2.51,
+          "whip14d": 1,
+          "avgReliefIPPerGame": 1.63
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CIN",
+        "name": "Cincinnati Reds",
+        "before": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 7.58,
+          "whip14d": 1.69,
+          "avgReliefIPPerGame": 2.97
+        },
+        "after": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 8.07,
+          "whip14d": 1.85,
+          "avgReliefIPPerGame": 2.92
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIL",
+        "name": "Milwaukee Brewers",
+        "before": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 2.92,
+          "whip14d": 1.12,
+          "avgReliefIPPerGame": 3.39
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.11,
+          "whip14d": 1.21,
+          "avgReliefIPPerGame": 2.89
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "PIT",
+        "name": "Pittsburgh Pirates",
+        "before": {
+          "grade": "F",
+          "tier": "veryLow",
+          "score": 55,
+          "era14d": 7.32,
+          "whip14d": 1.87,
+          "avgReliefIPPerGame": 2.24
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 6.32,
+          "whip14d": 1.84,
+          "avgReliefIPPerGame": 2.49
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SF",
+        "name": "San Francisco Giants",
+        "before": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 3.17,
+          "whip14d": 1.44,
+          "avgReliefIPPerGame": 2.6
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.26,
+          "whip14d": 1.55,
+          "avgReliefIPPerGame": 2.28
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "STL",
+        "name": "St. Louis Cardinals",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.29,
+          "whip14d": 1.37,
+          "avgReliefIPPerGame": 2.98
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.68,
+          "whip14d": 1.35,
+          "avgReliefIPPerGame": 2.65
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "WSH",
+        "name": "Washington Nationals",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 3.54,
+          "whip14d": 1.39,
+          "avgReliefIPPerGame": 3.31
+        },
+        "after": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 3.31,
+          "whip14d": 1.42,
+          "avgReliefIPPerGame": 3.21
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      }
+    ],
+    "teamsUnchanged": 12
+  },
+  {
+    "date": "2026-05-17",
+    "timestamp": "2026-05-17T17:31:53.455Z",
+    "filename": "2026-05-15-UBT Daily Report (Android).xlsx",
+    "teamsUpdated": 30,
+    "teamsChanged": [
+      {
+        "abbr": "BAL",
+        "name": "Baltimore Orioles",
+        "before": {
+          "grade": "F",
+          "tier": "veryLow",
+          "score": 55,
+          "era14d": 5.03,
+          "whip14d": 1.51,
+          "avgReliefIPPerGame": 2.98
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 4.26,
+          "whip14d": 1.39,
+          "avgReliefIPPerGame": 3.07
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "BOS",
+        "name": "Boston Red Sox",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.07,
+          "whip14d": 1.53,
+          "avgReliefIPPerGame": 2.95
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.44,
+          "whip14d": 1.55,
+          "avgReliefIPPerGame": 2.76
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CWS",
+        "name": "Chicago White Sox",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.31,
+          "whip14d": 1.36,
+          "avgReliefIPPerGame": 3.13
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 4.86,
+          "whip14d": 1.32,
+          "avgReliefIPPerGame": 3.03
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CLE",
+        "name": "Cleveland Guardians",
+        "before": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 4.31,
+          "whip14d": 1.56,
+          "avgReliefIPPerGame": 2.57
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.37,
+          "whip14d": 1.49,
+          "avgReliefIPPerGame": 2.58
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "HOU",
+        "name": "Houston Astros",
+        "before": {
+          "grade": "C",
+          "tier": "high",
+          "score": 45,
+          "era14d": 3.04,
+          "whip14d": 1.33,
+          "avgReliefIPPerGame": 3.42
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.07,
+          "whip14d": 1.39,
+          "avgReliefIPPerGame": 3.43
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "KC",
+        "name": "Kansas City Royals",
+        "before": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.48,
+          "whip14d": 1.35,
+          "avgReliefIPPerGame": 3.07
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 2.76,
+          "whip14d": 1.5,
+          "avgReliefIPPerGame": 2.99
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "LAA",
+        "name": "Los Angeles Angels",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.95,
+          "whip14d": 1.32,
+          "avgReliefIPPerGame": 2.69
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 4.43,
+          "whip14d": 1.44,
+          "avgReliefIPPerGame": 2.64
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIN",
+        "name": "Minnesota Twins",
+        "before": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 5.95,
+          "whip14d": 1.83,
+          "avgReliefIPPerGame": 3.57
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.25,
+          "whip14d": 1.68,
+          "avgReliefIPPerGame": 3.81
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYY",
+        "name": "New York Yankees",
+        "before": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 2.77,
+          "whip14d": 1.37,
+          "avgReliefIPPerGame": 2.43
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 2.58,
+          "whip14d": 1.33,
+          "avgReliefIPPerGame": 2.54
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SEA",
+        "name": "Seattle Mariners",
+        "before": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 1.92,
+          "whip14d": 1.22,
+          "avgReliefIPPerGame": 2.52
+        },
+        "after": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 2.11,
+          "whip14d": 1.27,
+          "avgReliefIPPerGame": 2.48
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TB",
+        "name": "Tampa Bay Rays",
+        "before": {
+          "grade": "B",
+          "tier": "veryHigh",
+          "score": 45,
+          "era14d": 2.05,
+          "whip14d": 1.08,
+          "avgReliefIPPerGame": 4.39
+        },
+        "after": {
+          "grade": "B",
+          "tier": "high",
+          "score": 55,
+          "era14d": 2.3,
+          "whip14d": 1.12,
+          "avgReliefIPPerGame": 4.3
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TEX",
+        "name": "Texas Rangers",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 4.17,
+          "whip14d": 1.64,
+          "avgReliefIPPerGame": 2.7
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 5.11,
+          "whip14d": 1.71,
+          "avgReliefIPPerGame": 2.4
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "TOR",
+        "name": "Toronto Blue Jays",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.42,
+          "whip14d": 1.44,
+          "avgReliefIPPerGame": 3.07
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 3.62,
+          "whip14d": 1.52,
+          "avgReliefIPPerGame": 3.16
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "ARI",
+        "name": "Arizona Diamondbacks",
+        "before": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 2.63,
+          "whip14d": 1,
+          "avgReliefIPPerGame": 1.55
+        },
+        "after": {
+          "grade": "A",
+          "tier": "veryLow",
+          "score": 100,
+          "era14d": 2.29,
+          "whip14d": 0.89,
+          "avgReliefIPPerGame": 1.57
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CIN",
+        "name": "Cincinnati Reds",
+        "before": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 8.58,
+          "whip14d": 1.93,
+          "avgReliefIPPerGame": 2.98
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 7.58,
+          "whip14d": 1.69,
+          "avgReliefIPPerGame": 2.97
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIA",
+        "name": "Miami Marlins",
+        "before": {
+          "grade": "A",
+          "tier": "low",
+          "score": 90,
+          "era14d": 2.33,
+          "whip14d": 0.86,
+          "avgReliefIPPerGame": 2.89
+        },
+        "after": {
+          "grade": "B",
+          "tier": "low",
+          "score": 80,
+          "era14d": 2.48,
+          "whip14d": 0.92,
+          "avgReliefIPPerGame": 2.97
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIL",
+        "name": "Milwaukee Brewers",
+        "before": {
+          "grade": "B",
+          "tier": "low",
+          "score": 80,
+          "era14d": 2.74,
+          "whip14d": 1.1,
+          "avgReliefIPPerGame": 3.29
+        },
+        "after": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 2.92,
+          "whip14d": 1.12,
+          "avgReliefIPPerGame": 3.39
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "PHI",
+        "name": "Philadelphia Phillies",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 2.73,
+          "whip14d": 1.17,
+          "avgReliefIPPerGame": 3.04
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.57,
+          "whip14d": 1.12,
+          "avgReliefIPPerGame": 3.21
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "STL",
+        "name": "St. Louis Cardinals",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 3.52,
+          "whip14d": 1.42,
+          "avgReliefIPPerGame": 2.98
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.29,
+          "whip14d": 1.37,
+          "avgReliefIPPerGame": 2.98
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "WSH",
+        "name": "Washington Nationals",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.49,
+          "whip14d": 1.44,
+          "avgReliefIPPerGame": 3.28
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 3.54,
+          "whip14d": 1.39,
+          "avgReliefIPPerGame": 3.31
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": false
+      }
+    ],
+    "teamsUnchanged": 10
+  },
+  {
+    "date": "2026-05-16",
+    "timestamp": "2026-05-16T14:00:00.000Z",
+    "filename": "mlb_data.xlsx (starters-excluded fix)",
+    "teamsUpdated": 30,
+    "teamsChanged": [
+      {
+        "abbr": "OAK",
+        "name": "OAK",
+        "before": {
+          "grade": null,
+          "tier": "veryLow",
+          "score": null,
+          "era14d": null,
+          "whip14d": null,
+          "avgReliefIPPerGame": 3.51
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryLow",
+          "score": 68,
+          "era14d": 5.67,
+          "whip14d": 1.47,
+          "avgReliefIPPerGame": 2.6
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "BAL",
+        "name": "BAL",
+        "before": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 4.72,
+          "whip14d": 1.55,
+          "avgReliefIPPerGame": 3.72
+        },
+        "after": {
+          "grade": "F",
+          "tier": "veryLow",
+          "score": 55,
+          "era14d": 5.03,
+          "whip14d": 1.51,
+          "avgReliefIPPerGame": 2.98
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "BOS",
+        "name": "BOS",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 3.85,
+          "whip14d": 1.59,
+          "avgReliefIPPerGame": 3.38
+        },
+        "after": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 4.07,
+          "whip14d": 1.53,
+          "avgReliefIPPerGame": 2.95
+        },
+        "gradeChanged": false,
+        "tierChanged": false,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "CWS",
+        "name": "CWS",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 70,
+          "era14d": 3.32,
+          "whip14d": 1.25,
+          "avgReliefIPPerGame": 3.95
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.31,
+          "whip14d": 1.36,
+          "avgReliefIPPerGame": 3.13
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CLE",
+        "name": "CLE",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.3,
+          "whip14d": 1.5,
+          "avgReliefIPPerGame": 3.7
+        },
+        "after": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 4.31,
+          "whip14d": 1.56,
+          "avgReliefIPPerGame": 2.57
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "DET",
+        "name": "DET",
+        "before": {
+          "grade": "D",
+          "tier": "high",
+          "score": 20,
+          "era14d": 3.64,
+          "whip14d": 1.6,
+          "avgReliefIPPerGame": 4.02
+        },
+        "after": {
+          "grade": "D",
+          "tier": "veryHigh",
+          "score": 23,
+          "era14d": 3.51,
+          "whip14d": 1.45,
+          "avgReliefIPPerGame": 3.84
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "HOU",
+        "name": "HOU",
+        "before": {
+          "grade": "D",
+          "tier": "high",
+          "score": 33,
+          "era14d": 3.77,
+          "whip14d": 1.48,
+          "avgReliefIPPerGame": 3.7
+        },
+        "after": {
+          "grade": "C",
+          "tier": "high",
+          "score": 45,
+          "era14d": 3.04,
+          "whip14d": 1.33,
+          "avgReliefIPPerGame": 3.42
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "KC",
+        "name": "KC",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.09,
+          "whip14d": 1.19,
+          "avgReliefIPPerGame": 3.6
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.48,
+          "whip14d": 1.35,
+          "avgReliefIPPerGame": 3.07
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "LAA",
+        "name": "LAA",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 58,
+          "era14d": 5.16,
+          "whip14d": 1.47,
+          "avgReliefIPPerGame": 3.82
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.95,
+          "whip14d": 1.32,
+          "avgReliefIPPerGame": 2.69
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIN",
+        "name": "MIN",
+        "before": {
+          "grade": "F",
+          "tier": "moderate",
+          "score": 33,
+          "era14d": 6.7,
+          "whip14d": 1.94,
+          "avgReliefIPPerGame": 4.35
+        },
+        "after": {
+          "grade": "F",
+          "tier": "low",
+          "score": 45,
+          "era14d": 5.95,
+          "whip14d": 1.83,
+          "avgReliefIPPerGame": 3.57
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYY",
+        "name": "NYY",
+        "before": {
+          "grade": "B",
+          "tier": "low",
+          "score": 70,
+          "era14d": 2.46,
+          "whip14d": 1.26,
+          "avgReliefIPPerGame": 4.39
+        },
+        "after": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 2.77,
+          "whip14d": 1.37,
+          "avgReliefIPPerGame": 2.43
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "SEA",
+        "name": "SEA",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 70,
+          "era14d": 2.8,
+          "whip14d": 1.28,
+          "avgReliefIPPerGame": 3.22
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 1.92,
+          "whip14d": 1.22,
+          "avgReliefIPPerGame": 2.52
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "TB",
+        "name": "TB",
+        "before": {
+          "grade": "B",
+          "tier": "high",
+          "score": 45,
+          "era14d": 2.47,
+          "whip14d": 1.14,
+          "avgReliefIPPerGame": 4.05
+        },
+        "after": {
+          "grade": "B",
+          "tier": "veryHigh",
+          "score": 45,
+          "era14d": 2.05,
+          "whip14d": 1.08,
+          "avgReliefIPPerGame": 4.39
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "TEX",
+        "name": "TEX",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 3.9,
+          "whip14d": 1.56,
+          "avgReliefIPPerGame": 3.52
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 4.17,
+          "whip14d": 1.64,
+          "avgReliefIPPerGame": 2.7
+        },
+        "gradeChanged": false,
+        "tierChanged": false,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "TOR",
+        "name": "TOR",
+        "before": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 3.44,
+          "whip14d": 1.46,
+          "avgReliefIPPerGame": 3.62
+        },
+        "after": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 80,
+          "era14d": 3.42,
+          "whip14d": 1.44,
+          "avgReliefIPPerGame": 3.07
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "ARI",
+        "name": "ARI",
+        "before": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 2.52,
+          "whip14d": 0.98,
+          "avgReliefIPPerGame": 2.91
+        },
+        "after": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 2.63,
+          "whip14d": 1,
+          "avgReliefIPPerGame": 1.55
+        },
+        "gradeChanged": false,
+        "tierChanged": false,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "ATL",
+        "name": "ATL",
+        "before": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.57,
+          "whip14d": 1.11,
+          "avgReliefIPPerGame": 3.67
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.75,
+          "whip14d": 1.06,
+          "avgReliefIPPerGame": 2.45
+        },
+        "gradeChanged": false,
+        "tierChanged": false,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "CHC",
+        "name": "CHC",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 70,
+          "era14d": 3.13,
+          "whip14d": 1.2,
+          "avgReliefIPPerGame": 3.63
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 2.05,
+          "whip14d": 1.06,
+          "avgReliefIPPerGame": 3.04
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "CIN",
+        "name": "CIN",
+        "before": {
+          "grade": "F",
+          "tier": "moderate",
+          "score": 33,
+          "era14d": 8,
+          "whip14d": 1.97,
+          "avgReliefIPPerGame": 3.61
+        },
+        "after": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 8.58,
+          "whip14d": 1.93,
+          "avgReliefIPPerGame": 2.98
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "COL",
+        "name": "COL",
+        "before": {
+          "grade": "F",
+          "tier": "high",
+          "score": 20,
+          "era14d": 6.76,
+          "whip14d": 1.59,
+          "avgReliefIPPerGame": 4.48
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 4.45,
+          "whip14d": 1.19,
+          "avgReliefIPPerGame": 3.71
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "LAD",
+        "name": "LAD",
+        "before": {
+          "grade": "C",
+          "tier": "veryLow",
+          "score": 70,
+          "era14d": 3.33,
+          "whip14d": 1.3,
+          "avgReliefIPPerGame": 3.39
+        },
+        "after": {
+          "grade": "B",
+          "tier": "veryLow",
+          "score": 90,
+          "era14d": 2.18,
+          "whip14d": 1.07,
+          "avgReliefIPPerGame": 3.18
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "MIA",
+        "name": "MIA",
+        "before": {
+          "grade": "A",
+          "tier": "low",
+          "score": 90,
+          "era14d": 1.87,
+          "whip14d": 0.89,
+          "avgReliefIPPerGame": 3.95
+        },
+        "after": {
+          "grade": "A",
+          "tier": "low",
+          "score": 90,
+          "era14d": 2.33,
+          "whip14d": 0.86,
+          "avgReliefIPPerGame": 2.89
+        },
+        "gradeChanged": false,
+        "tierChanged": false,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "MIL",
+        "name": "MIL",
+        "before": {
+          "grade": "C",
+          "tier": "high",
+          "score": 45,
+          "era14d": 3.03,
+          "whip14d": 1.18,
+          "avgReliefIPPerGame": 3.88
+        },
+        "after": {
+          "grade": "B",
+          "tier": "low",
+          "score": 80,
+          "era14d": 2.74,
+          "whip14d": 1.1,
+          "avgReliefIPPerGame": 3.29
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "NYM",
+        "name": "NYM",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.04,
+          "whip14d": 1.35,
+          "avgReliefIPPerGame": 3.84
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.09,
+          "whip14d": 1.45,
+          "avgReliefIPPerGame": 3.39
+        },
+        "gradeChanged": false,
+        "tierChanged": false,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "PHI",
+        "name": "PHI",
+        "before": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 48,
+          "era14d": 4,
+          "whip14d": 1.44,
+          "avgReliefIPPerGame": 3.44
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 2.73,
+          "whip14d": 1.17,
+          "avgReliefIPPerGame": 3.04
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "PIT",
+        "name": "PIT",
+        "before": {
+          "grade": "F",
+          "tier": "veryLow",
+          "score": 55,
+          "era14d": 7.65,
+          "whip14d": 1.78,
+          "avgReliefIPPerGame": 2.85
+        },
+        "after": {
+          "grade": "F",
+          "tier": "veryLow",
+          "score": 55,
+          "era14d": 6.85,
+          "whip14d": 1.74,
+          "avgReliefIPPerGame": 2.3
+        },
+        "gradeChanged": false,
+        "tierChanged": false,
+        "scoreChanged": false
+      },
+      {
+        "abbr": "SD",
+        "name": "SD",
+        "before": {
+          "grade": "A",
+          "tier": "high",
+          "score": 55,
+          "era14d": 1.33,
+          "whip14d": 0.87,
+          "avgReliefIPPerGame": 4.27
+        },
+        "after": {
+          "grade": "B",
+          "tier": "moderate",
+          "score": 68,
+          "era14d": 1.26,
+          "whip14d": 1,
+          "avgReliefIPPerGame": 3.3
+        },
+        "gradeChanged": true,
+        "tierChanged": true,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "SF",
+        "name": "SF",
+        "before": {
+          "grade": "D",
+          "tier": "low",
+          "score": 48,
+          "era14d": 3.3,
+          "whip14d": 1.59,
+          "avgReliefIPPerGame": 3.82
+        },
+        "after": {
+          "grade": "C",
+          "tier": "low",
+          "score": 70,
+          "era14d": 3.05,
+          "whip14d": 1.42,
+          "avgReliefIPPerGame": 2.5
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "STL",
+        "name": "STL",
+        "before": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.27,
+          "whip14d": 1.34,
+          "avgReliefIPPerGame": 3.35
+        },
+        "after": {
+          "grade": "D",
+          "tier": "moderate",
+          "score": 45,
+          "era14d": 3.52,
+          "whip14d": 1.42,
+          "avgReliefIPPerGame": 2.98
+        },
+        "gradeChanged": true,
+        "tierChanged": false,
+        "scoreChanged": true
+      },
+      {
+        "abbr": "WSH",
+        "name": "WSH",
+        "before": {
+          "grade": "C",
+          "tier": "high",
+          "score": 45,
+          "era14d": 3.29,
+          "whip14d": 1.34,
+          "avgReliefIPPerGame": 4.48
+        },
+        "after": {
+          "grade": "C",
+          "tier": "moderate",
+          "score": 58,
+          "era14d": 3.49,
+          "whip14d": 1.44,
+          "avgReliefIPPerGame": 3.28
+        },
+        "gradeChanged": false,
+        "tierChanged": true,
+        "scoreChanged": true
+      }
+    ],
+    "teamsUnchanged": 0
+  }
+]
