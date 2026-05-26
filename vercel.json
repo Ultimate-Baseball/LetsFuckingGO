@@ -1,10 +1,4 @@
 {
-  "crons": [
-    {
-      "path": "/api/mlb-monitor",
-      "schedule": "* * * * *"
-    }
-  ],
   "functions": {
     "app/api/mlb-monitor/route.ts": {
       "maxDuration": 30
