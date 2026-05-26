@@ -1,10 +1,1 @@
-{
-  "functions": {
-    "app/api/mlb-monitor/route.ts": {
-      "maxDuration": 30
-    },
-    "app/api/upload-data/route.ts": {
-      "maxDuration": 60
-    }
-  }
-}
+{}
