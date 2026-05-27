@@ -229,8 +229,12 @@ export async function POST(req: NextRequest) {
     });
   } catch (err: any) {
     console.error("[upload-data] Error:", err);
+    const msg = err?.message ?? String(err);
+    const hint = !process.env.BLOB_READ_WRITE_TOKEN
+      ? ' (BLOB_READ_WRITE_TOKEN env var is missing — connect the Blob store in Vercel dashboard and redeploy)'
+      : '';
     return NextResponse.json(
-      { error: `Upload failed: ${err?.message ?? "Internal server error"}` },
+      { error: `Upload failed: ${msg}${hint}` },
       { status: 500 }
     );
   }
