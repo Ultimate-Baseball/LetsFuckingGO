@@ -3,14 +3,15 @@
  *
  * The serverless filesystem at process.cwd() is READ-ONLY on Vercel.
  * All writes go through Blob; reads check Blob first, fall back to
- * the bundled data/mlb-teams.json that ships with each deployment.
+ * the bundled data/*.json snapshots that ship with each deployment.
  *
  * Required env var: BLOB_READ_WRITE_TOKEN (auto-set when you connect
  * a Blob store to this project in Vercel Dashboard → Storage).
  */
 
 import { put, list } from '@vercel/blob';
-import mlbTeamsFallback from '@/data/mlb-teams.json';
+import mlbTeamsFallback   from '@/data/mlb-teams.json';
+import changeLogFallback  from '@/data/change-log.json';
 
 // ─── Blob pathnames (stable, no random suffix) ────────────────────────────────
 export const BLOB_TEAMS_PATH     = 'ubt/mlb-teams.json';
@@ -23,8 +24,11 @@ export const BLOB_ALERTS_TODAY   = 'ubt/alerts-today.json';
 /** Write any JSON object to Blob under a stable pathname. */
 export async function writeBlobJson(pathname: string, data: unknown): Promise<void> {
   const token = process.env.BLOB_READ_WRITE_TOKEN;
-  if (!token) throw new Error('BLOB_READ_WRITE_TOKEN is not set. Connect the Blob store in Vercel Dashboard → Storage and redeploy.');
-
+  if (!token) {
+    throw new Error(
+      'BLOB_READ_WRITE_TOKEN is not set. Connect the Blob store in Vercel Dashboard → Storage and redeploy.'
+    );
+  }
   const json = JSON.stringify(data, null, 2);
   await put(pathname, json, {
     access:          'public',
@@ -36,8 +40,8 @@ export async function writeBlobJson(pathname: string, data: unknown): Promise<vo
 
 /**
  * Read JSON from Blob by pathname.
- * Uses list() to look up the URL, then fetches with the token
- * (handles both public and private stores).
+ * Uses list() to look up the URL (server-side, uses token automatically),
+ * then fetches with Authorization header for private stores.
  * Returns null if the blob doesn't exist yet.
  */
 export async function readBlobJson<T>(pathname: string): Promise<T | null> {
@@ -49,7 +53,6 @@ export async function readBlobJson<T>(pathname: string): Promise<T | null> {
     const blob = blobs.find(b => b.pathname === pathname);
     if (!blob) return null;
 
-    // Include token in Authorization header for private stores
     const res = await fetch(blob.url, {
       headers: { Authorization: `Bearer ${token}` },
       cache:   'no-store',
@@ -67,7 +70,6 @@ export async function readBlobJson<T>(pathname: string): Promise<T | null> {
 export async function readTeamsData(): Promise<Record<string, any>> {
   const blob = await readBlobJson<Record<string, any>>(BLOB_TEAMS_PATH);
   if (blob) return blob;
-  // Fallback to the bundled snapshot that ships with each deployment
   return mlbTeamsFallback as unknown as Record<string, any>;
 }
 
@@ -76,9 +78,12 @@ export async function writeTeamsData(data: Record<string, any>): Promise<void> {
   await writeBlobJson(BLOB_TEAMS_PATH, data);
 }
 
-/** Load change log — Blob first, empty array as fallback. */
+/** Load change log — Blob first, bundled JSON as fallback. */
 export async function readChangeLog<T = unknown>(): Promise<T[]> {
-  return (await readBlobJson<T[]>(BLOB_CHANGELOG_PATH)) ?? [];
+  const blob = await readBlobJson<T[]>(BLOB_CHANGELOG_PATH);
+  if (blob) return blob;
+  // Fall back to the bundled change-log.json that ships with the deployment
+  return changeLogFallback as unknown as T[];
 }
 
 /** Persist updated change log to Blob. */

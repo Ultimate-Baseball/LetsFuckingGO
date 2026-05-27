@@ -283,24 +283,44 @@ export default function AdminPageClient() {
     setStatus("uploading");
     setResult(null);
     try {
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-      const res  = await fetch("/api/upload-data", { method: "POST", body: formData });
+      // Step 1: Get a short-lived client upload token from the server
+      const tokenRes = await fetch("/api/upload-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ filename: selectedFile.name }),
+      });
+      if (!tokenRes.ok) {
+        const e = await tokenRes.json().catch(() => ({}));
+        throw new Error(e?.error ?? "Failed to get upload token");
+      }
+      const { clientToken, pathname } = await tokenRes.json();
+
+      // Step 2: Upload file DIRECTLY to Blob from the browser (no 4.5 MB limit)
+      const { put } = await import("@vercel/blob/client");
+      const blob = await put(pathname, selectedFile, {
+        access: "public",
+        token:  clientToken,
+      });
+
+      // Step 3: Tell the server to process the uploaded Excel from Blob
+      const res  = await fetch("/api/upload-data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ blobUrl: blob.url, filename: selectedFile.name }),
+      });
       const data: UploadResult = await res.json();
       setResult(data);
       setStatus(data.success ? "success" : "error");
       if (data.success) {
         setSelectedFile(null);
-        // Notify header to update its date display
         window.dispatchEvent(new CustomEvent("ubt-data-updated"));
-        // Refresh change log
         fetch("/api/change-log")
           .then(r => r.json())
           .then(d => { if (d.success) setLog(d.log ?? []); })
           .catch(() => {});
       }
     } catch (err: any) {
-      setResult({ success: false, error: `Network error: ${err?.message ?? "Could not reach server"}` });
+      setResult({ success: false, error: `Upload failed: ${err?.message ?? "Could not reach server"}` });
       setStatus("error");
     }
   };
