@@ -2,7 +2,7 @@
  * POST /api/upload-data
  * ADMIN ONLY — accepts { blobUrl: string, filename?: string } JSON body.
  *
- * SPEED OPTIMIZATIONS (keeps total time under Vercel's 10s Hobby limit):
+ * SPEED OPTIMIZATIONS (Vercel Pro — 60s function budget):
  *
  *  1. We do NOT read the existing teams blob (1.25MB) before writing.
  *     Instead, the bundled `mlb-teams.json` (ships with every deploy) is
@@ -14,7 +14,8 @@
  *
  *  3. All reads are parallel; all writes are parallel (fire-and-forget del).
  *
- *  4. A hard 9-second AbortController timeout prevents silent hangs.
+ *  4. A 30-second AbortController timeout on the Excel fetch prevents
+ *     silent hangs (safe with the 60s total budget on Pro).
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -31,7 +32,7 @@ import mlbTeamsTemplate from '@/data/mlb-teams.json';
 import type { TeamData } from '@/lib/types';
 
 export const runtime     = 'nodejs';
-export const maxDuration = 60; // set for Pro; Hobby is capped at 10s regardless
+export const maxDuration = 60; // Vercel Pro — enforces the 60s limit (Hobby hard-caps at 10s)
 
 const AUTH_COOKIE        = 'ubt_auth_role';
 const BLOB_PREV_METRICS  = 'ubt/prev-metrics.json';
@@ -141,7 +142,7 @@ export async function POST(req: NextRequest) {
       fetchWithTimeout(blobUrl, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
         cache: 'no-store',
-      }, 8_000),   // 8s timeout on Excel fetch
+      }, 30_000),   // 30s timeout on Excel fetch — safe within the 60s Pro budget
       readBlobJson<PrevMetricsMap>(BLOB_PREV_METRICS),   // ~3 KB
       readBlobJson<ChangeLogEntry[]>(BLOB_CHANGELOG_PATH), // ~50 KB
     ]);
