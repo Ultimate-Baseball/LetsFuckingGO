@@ -6,9 +6,9 @@ import { Header } from '@/components/header';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Zap, RefreshCw, Trash2, FlaskConical, ChevronDown, ChevronUp, Shield, Wifi } from 'lucide-react';
+import { Zap, RefreshCw, Trash2, FlaskConical, ChevronDown, ChevronUp, Shield, Wifi, Eye, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { BullpenAlert, MonitorState } from '@/lib/mlb/types';
+import type { BullpenAlert, MonitorState, MonitorPitcherData } from '@/lib/mlb/types';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -21,9 +21,9 @@ const TYPE_LABELS: Record<BullpenAlert['type'], string> = {
 };
 
 const SEVERITY_STYLES = {
-  critical: { card: 'border-red-500/50 bg-red-950/20',   badge: 'bg-red-600 hover:bg-red-600',   dot: 'bg-red-500'   },
-  warning:  { card: 'border-amber-500/40 bg-amber-950/20', badge: 'bg-amber-600 hover:bg-amber-600', dot: 'bg-amber-400' },
-  info:     { card: 'border-border bg-card',              badge: 'bg-blue-600 hover:bg-blue-600',  dot: 'bg-blue-400'  },
+  critical: { card: 'border-red-500/50 bg-red-950/20',    badge: 'bg-red-600 hover:bg-red-600',    dot: 'bg-red-500',    row: 'border-red-500/30 bg-red-950/10'   },
+  warning:  { card: 'border-amber-500/40 bg-amber-950/20', badge: 'bg-amber-600 hover:bg-amber-600', dot: 'bg-amber-400',  row: 'border-amber-500/30 bg-amber-950/10' },
+  info:     { card: 'border-border bg-card',               badge: 'bg-blue-600 hover:bg-blue-600',   dot: 'bg-blue-400',   row: 'border-border bg-muted/20'          },
 };
 
 const GRADE_STYLES: Record<string, string> = {
@@ -140,6 +140,231 @@ function AlertCard({ alert }: { alert: BullpenAlert }) {
           </div>
         )}
       </CardContent>
+    </Card>
+  );
+}
+
+// ─── Watch List Row ───────────────────────────────────────────────────────────
+
+interface WatchEntry {
+  pitcher: MonitorPitcherData;
+  severity: 'critical' | 'warning' | 'info';
+  reasons: string[];
+}
+
+function WatchListRow({ entry }: { entry: WatchEntry }) {
+  const [expanded, setExpanded] = useState(false);
+  const s = SEVERITY_STYLES[entry.severity];
+  const p = entry.pitcher;
+
+  return (
+    <div className={cn('rounded-lg border px-4 py-3 transition-all', s.row)}>
+      <div className="flex items-start justify-between gap-3">
+        {/* Left: name + team + flags */}
+        <div className="flex items-start gap-2.5 min-w-0 flex-1">
+          <span className={cn('w-2 h-2 rounded-full mt-1.5 shrink-0', s.dot)} />
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-semibold text-sm text-foreground">{p.name}</span>
+              <span className="text-xs text-muted-foreground">{p.team}</span>
+              {!p.available && (
+                <Badge className="text-[10px] px-1.5 py-0 bg-red-600 hover:bg-red-600">Unavailable</Badge>
+              )}
+              {p.consecutiveDaysUsed >= 2 && p.available && (
+                <Badge className="text-[10px] px-1.5 py-0 bg-orange-600 hover:bg-orange-600">{p.consecutiveDaysUsed}-day streak</Badge>
+              )}
+            </div>
+
+            {/* Inline reasons — collapsed */}
+            {!expanded && (
+              <p className="text-xs text-muted-foreground mt-0.5 truncate">{entry.reasons[0]}</p>
+            )}
+            {expanded && (
+              <div className="mt-2 space-y-0.5">
+                {entry.reasons.map((r, i) => (
+                  <p key={i} className="text-xs text-muted-foreground flex items-start gap-1">
+                    <span className="opacity-40 shrink-0">›</span>
+                    <span>{r}</span>
+                  </p>
+                ))}
+              </div>
+            )}
+            {entry.reasons.length > 1 && (
+              <button
+                onClick={() => setExpanded(!expanded)}
+                className="text-[10px] text-primary hover:text-primary/80 mt-1 transition-colors"
+              >
+                {expanded ? '▲ less' : `+${entry.reasons.length - 1} more reason${entry.reasons.length > 2 ? 's' : ''}`}
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Right: stats */}
+        <div className="shrink-0 flex items-center gap-3 text-xs">
+          <div className="text-center">
+            <div className="text-muted-foreground mb-0.5">Grade</div>
+            <span className={cn('font-bold px-1.5 py-0.5 rounded', GRADE_STYLES[p.effectivenessGrade])}>
+              {p.effectivenessGrade}
+            </span>
+          </div>
+          <div className="text-center">
+            <div className="text-muted-foreground mb-0.5">WHIP</div>
+            <span className={cn('font-mono font-semibold', p.whip >= 1.60 ? 'text-red-400' : 'text-foreground')}>
+              {p.whip.toFixed(2)}
+            </span>
+          </div>
+          <div className="text-center">
+            <div className="text-muted-foreground mb-0.5">Fatigue</div>
+            <span className={cn('font-mono font-semibold', p.fatigueIndex >= 4 ? 'text-amber-400' : 'text-foreground')}>
+              {p.fatigueIndex}/5
+            </span>
+          </div>
+          <div className="text-center">
+            <div className="text-muted-foreground mb-0.5">Tier</div>
+            <span className={cn('font-mono font-semibold', p.healthTier >= 4 ? 'text-red-400' : p.healthTier >= 3 ? 'text-amber-400' : 'text-foreground')}>
+              {p.healthTier}/5
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Watch List Section ───────────────────────────────────────────────────────
+
+interface WatchlistData {
+  watchlist: WatchEntry[];
+  total: number;
+  critical: number;
+  warning: number;
+  info: number;
+  generatedAt: string;
+}
+
+function WatchListSection() {
+  const [data,      setData]      = useState<WatchlistData | null>(null);
+  const [loading,   setLoading]   = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
+  const [sevFilter, setSevFilter] = useState<'all' | 'critical' | 'warning' | 'info'>('all');
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/alerts/watchlist');
+      if (res.ok) setData(await res.json());
+    } catch {}
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
+
+  const entries = data
+    ? (sevFilter === 'all' ? data.watchlist : data.watchlist.filter(e => e.severity === sevFilter))
+    : [];
+
+  return (
+    <Card className="mb-6 border-amber-500/30">
+      {/* Header */}
+      <CardHeader className="pb-2 pt-3 px-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Eye className="w-4 h-4 text-amber-400" />
+            <CardTitle className="text-sm font-semibold text-foreground">Today&apos;s Watch List</CardTitle>
+            {data && (
+              <div className="flex items-center gap-1.5 ml-1">
+                {data.critical > 0 && (
+                  <span className="text-[10px] font-bold bg-red-600 text-white px-1.5 py-0.5 rounded">
+                    {data.critical} critical
+                  </span>
+                )}
+                {data.warning > 0 && (
+                  <span className="text-[10px] font-bold bg-amber-600 text-white px-1.5 py-0.5 rounded">
+                    {data.warning} warning
+                  </span>
+                )}
+                {data.info > 0 && (
+                  <span className="text-[10px] bg-muted text-muted-foreground px-1.5 py-0.5 rounded">
+                    {data.info} info
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={load}
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
+            >
+              <RefreshCw className={cn('w-3 h-3', loading && 'animate-spin')} />
+            </button>
+            <button
+              onClick={() => setCollapsed(!collapsed)}
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
+            >
+              {collapsed ? <><ChevronDown className="w-3.5 h-3.5" /> Show</> : <><ChevronUp className="w-3.5 h-3.5" /> Hide</>}
+            </button>
+          </div>
+        </div>
+        <p className="text-xs text-muted-foreground mt-0.5">
+          Pitchers currently flagged who would trigger an alert if they entered a live game
+        </p>
+      </CardHeader>
+
+      {!collapsed && (
+        <CardContent className="pb-4 px-4">
+          {loading && !data ? (
+            <div className="flex items-center justify-center py-8 text-muted-foreground">
+              <RefreshCw className="w-4 h-4 animate-spin mr-2" />
+              <span className="text-sm">Loading watchlist…</span>
+            </div>
+          ) : !data || data.total === 0 ? (
+            <div className="text-center py-6 text-muted-foreground">
+              <AlertTriangle className="w-6 h-6 mx-auto mb-2 opacity-30" />
+              <p className="text-sm">No pitchers currently meet alert thresholds</p>
+              <p className="text-xs mt-1 opacity-60">Upload fresh data to update this list</p>
+            </div>
+          ) : (
+            <>
+              {/* Severity filter */}
+              <div className="flex flex-wrap gap-1.5 mb-3">
+                {(['all', 'critical', 'warning', 'info'] as const).map(sev => (
+                  <button
+                    key={sev}
+                    onClick={() => setSevFilter(sev)}
+                    className={cn(
+                      'px-2.5 py-1 rounded-full text-[11px] font-medium transition-colors',
+                      sevFilter === sev
+                        ? sev === 'critical' ? 'bg-red-600 text-white'
+                        : sev === 'warning'  ? 'bg-amber-600 text-white'
+                        : sev === 'info'     ? 'bg-blue-600 text-white'
+                        : 'bg-foreground text-background'
+                        : 'bg-muted text-muted-foreground hover:text-foreground'
+                    )}
+                  >
+                    {sev === 'all' ? `All (${data.total})` : `${sev.charAt(0).toUpperCase() + sev.slice(1)} (${data[sev]})`}
+                  </button>
+                ))}
+                <span className="ml-auto text-[10px] text-muted-foreground self-center">
+                  Updated {data ? timeAgo(data.generatedAt) : '—'}
+                </span>
+              </div>
+
+              {/* List */}
+              <div className="space-y-2">
+                {entries.map((entry, i) => (
+                  <WatchListRow key={`${entry.pitcher.name}-${i}`} entry={entry} />
+                ))}
+              </div>
+
+              <p className="text-[10px] text-muted-foreground mt-3 text-center">
+                {data.total} pitcher{data.total !== 1 ? 's' : ''} flagged across all 32 teams · refreshes with each data upload
+              </p>
+            </>
+          )}
+        </CardContent>
+      )}
     </Card>
   );
 }
@@ -331,6 +556,9 @@ export default function AlertsPageClient({ initialAlerts, initialState }: Props)
             </div>
           </CardContent>
         </Card>
+
+        {/* ── WATCH LIST ── */}
+        <WatchListSection />
 
         {/* Filter tabs */}
         <div className="mb-4">
