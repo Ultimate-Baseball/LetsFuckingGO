@@ -305,12 +305,26 @@ export default function AdminPageClient() {
       });
 
       // Step 3: Tell the server to process the uploaded Excel from Blob
-      const res  = await fetch("/api/upload-data", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ blobUrl: blob.url, filename: selectedFile.name }),
-      });
-      const data: UploadResult = await res.json();
+      // 30-second client-side timeout prevents silent forever-hang on Vercel
+      const uploadCtrl    = new AbortController();
+      const uploadTimeout = setTimeout(() => uploadCtrl.abort(), 30_000);
+      let res: Response;
+      try {
+        res = await fetch("/api/upload-data", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ blobUrl: blob.url, filename: selectedFile.name }),
+          signal: uploadCtrl.signal,
+        });
+      } finally {
+        clearTimeout(uploadTimeout);
+      }
+      let data: UploadResult;
+      if (!res.ok && res.headers.get("content-type")?.includes("application/json") === false) {
+        data = { success: false, error: `Server error (${res.status}). The file may be too large or the request timed out. Please try again.` };
+      } else {
+        data = await res.json().catch(() => ({ success: false, error: `Server error (${res.status}). Please try again.` }));
+      }
       setResult(data);
       setStatus(data.success ? "success" : "error");
       if (data.success) {

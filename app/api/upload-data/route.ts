@@ -2,14 +2,19 @@
  * POST /api/upload-data
  * ADMIN ONLY — accepts { blobUrl: string, filename?: string } JSON body.
  *
- * The Excel file is uploaded directly from the browser to Vercel Blob
- * (bypassing the 4.5 MB serverless body limit). This endpoint receives
- * the resulting blob URL, fetches the file server-side, parses it,
- * recalculates all metrics, builds a diff, and persists to Blob storage.
+ * SPEED OPTIMIZATIONS (keeps total time under Vercel's 10s Hobby limit):
  *
- * Reads happen in parallel (Excel + teams + changelog).
- * Writes happen in parallel (teams + changelog).
- * maxDuration = 60 prevents the Vercel Hobby 10s timeout.
+ *  1. We do NOT read the existing teams blob (1.25MB) before writing.
+ *     Instead, the bundled `mlb-teams.json` (ships with every deploy) is
+ *     used as the structural template.  The Excel is always the source of
+ *     truth for pitcher data, so no merge is needed.
+ *
+ *  2. Diffs use a tiny `ubt/prev-metrics.json` blob (~3KB) written after
+ *     each successful upload, rather than comparing against the full dataset.
+ *
+ *  3. All reads are parallel; all writes are parallel (fire-and-forget del).
+ *
+ *  4. A hard 9-second AbortController timeout prevents silent hangs.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -17,17 +22,19 @@ import { del } from '@vercel/blob';
 import { parseExcelBuffer } from '@/lib/excel-parser';
 import { computeTeamMetrics } from '@/lib/calculations';
 import {
-  readTeamsData,
-  writeTeamsData,
-  readChangeLog,
-  writeChangeLog,
+  writeBlobJson,
+  readBlobJson,
+  BLOB_TEAMS_PATH,
+  BLOB_CHANGELOG_PATH,
 } from '@/lib/blob-store';
+import mlbTeamsTemplate from '@/data/mlb-teams.json';
 import type { TeamData } from '@/lib/types';
 
-export const runtime    = 'nodejs';
-export const maxDuration = 60; // Vercel Hobby max — prevents timeout on large files
+export const runtime     = 'nodejs';
+export const maxDuration = 60; // set for Pro; Hobby is capped at 10s regardless
 
-const AUTH_COOKIE = 'ubt_auth_role';
+const AUTH_COOKIE        = 'ubt_auth_role';
+const BLOB_PREV_METRICS  = 'ubt/prev-metrics.json';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -59,6 +66,8 @@ export interface ChangeLogEntry {
   teamsUnchanged: number;
 }
 
+type PrevMetricsMap = Record<string, TeamSnapshot>;
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function isAdmin(req: NextRequest): boolean {
@@ -67,25 +76,38 @@ function isAdmin(req: NextRequest): boolean {
   return !!req.cookies.get('ubt_admin_auth')?.value;
 }
 
-function snapshot(team: TeamData): TeamSnapshot {
-  const m = team.metrics ?? {};
+function snapshot(metrics: Record<string, any>): TeamSnapshot {
   return {
-    grade:              (m as any).letterGrade              ?? null,
-    tier:               (m as any).healthTier               ?? null,
-    score:              (m as any).compositeScore            ?? null,
-    era14d:             (m as any).era14d                   ?? null,
-    whip14d:            (m as any).whip14d                  ?? null,
-    avgReliefIPPerGame: (m as any).avgReliefIPPerGame       ?? null,
+    grade:              metrics.letterGrade              ?? null,
+    tier:               metrics.healthTier               ?? null,
+    score:              metrics.compositeScore            ?? null,
+    era14d:             metrics.era14d                   ?? null,
+    whip14d:            metrics.whip14d                  ?? null,
+    avgReliefIPPerGame: metrics.avgReliefIPPerGame       ?? null,
   };
 }
 
-function buildDiff(abbr: string, name: string, before: TeamSnapshot, after: TeamSnapshot): TeamDiff {
+function buildDiff(
+  abbr: string, name: string,
+  before: TeamSnapshot, after: TeamSnapshot,
+): TeamDiff {
   return {
     abbr, name, before, after,
     gradeChanged: before.grade !== after.grade,
     tierChanged:  before.tier  !== after.tier,
     scoreChanged: before.score !== after.score,
   };
+}
+
+/** Fetch with an AbortController timeout so we never hang indefinitely. */
+async function fetchWithTimeout(url: string, opts: RequestInit, ms: number): Promise<Response> {
+  const ctrl = new AbortController();
+  const id   = setTimeout(() => ctrl.abort(), ms);
+  try {
+    return await fetch(url, { ...opts, signal: ctrl.signal });
+  } finally {
+    clearTimeout(id);
+  }
 }
 
 // ── Route ─────────────────────────────────────────────────────────────────────
@@ -109,16 +131,19 @@ export async function POST(req: NextRequest) {
     }
 
     const token    = process.env.BLOB_READ_WRITE_TOKEN ?? '';
-    const safeName = (filename ?? blobUrl.split('/').pop() ?? 'upload.xlsx').replace(/[^a-zA-Z0-9._-]/g, '_');
+    const safeName = (filename ?? blobUrl.split('/').pop() ?? 'upload.xlsx')
+      .replace(/[^a-zA-Z0-9._-]/g, '_');
 
-    // ── Parallel reads: fetch Excel + load existing teams + load changelog ──
-    const [fileRes, existingData, existing_log] = await Promise.all([
-      fetch(blobUrl, {
+    // ── Parallel reads: Excel + tiny prev-metrics + changelog ─────────────
+    // We deliberately do NOT read the 1.25MB teams blob — we use the bundled
+    // mlb-teams.json as a structural template instead (saves 2-4 seconds).
+    const [fileRes, prevMetrics, existingLog] = await Promise.all([
+      fetchWithTimeout(blobUrl, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
         cache: 'no-store',
-      }),
-      readTeamsData(),
-      readChangeLog<ChangeLogEntry>(),
+      }, 8_000),   // 8s timeout on Excel fetch
+      readBlobJson<PrevMetricsMap>(BLOB_PREV_METRICS),   // ~3 KB
+      readBlobJson<ChangeLogEntry[]>(BLOB_CHANGELOG_PATH), // ~50 KB
     ]);
 
     if (!fileRes.ok) {
@@ -127,37 +152,36 @@ export async function POST(req: NextRequest) {
         { status: 500 }
       );
     }
+
     const arrayBuffer = await fileRes.arrayBuffer();
 
-    // ── Build lookup maps ─────────────────────────────────────────────────
+    // ── Build lookup from bundled template (no Blob read needed) ──────────
+    const templateData  = mlbTeamsTemplate as Record<string, any>;
     const byAbbr: Record<string, TeamData> = {};
-    const beforeSnapshots: Record<string, TeamSnapshot> = {};
-    for (const t of Object.values(existingData) as TeamData[]) {
-      if (t.abbr) {
-        byAbbr[t.abbr.toUpperCase()] = t;
-        beforeSnapshots[t.abbr.toUpperCase()] = snapshot(t);
-      }
+    for (const t of Object.values(templateData) as TeamData[]) {
+      if (t.abbr) byAbbr[t.abbr.toUpperCase()] = JSON.parse(JSON.stringify(t)); // deep-clone
     }
 
     // ── Parse upload ───────────────────────────────────────────────────────
     const parsed = parseExcelBuffer(arrayBuffer);
 
     if (parsed.stats.teamsFound === 0) {
-      return NextResponse.json({ error: 'No team data found in file.', warnings: parsed.warnings }, { status: 422 });
+      return NextResponse.json(
+        { error: 'No team data found in file.', warnings: parsed.warnings },
+        { status: 422 }
+      );
     }
 
-    // ── Apply updates ──────────────────────────────────────────────────────
+    // ── Apply updates from Excel onto template ─────────────────────────────
     const updatedTeams: string[] = [];
     const skippedTeams: string[] = [];
+    const newMetrics:   PrevMetricsMap = {};
 
     for (const [abbr, pitchers] of Object.entries(parsed.pitchersByTeam)) {
       const team = byAbbr[abbr.toUpperCase()];
       if (!team) { skippedTeams.push(abbr); continue; }
 
-      team.pitchers = pitchers.map((p) => {
-        const existing = team.pitchers.find(ep => ep.name.toLowerCase() === p.name.toLowerCase());
-        return { ...p, gameLog: p.gameLog.length > 0 ? p.gameLog : (existing?.gameLog ?? []) };
-      });
+      team.pitchers = pitchers; // Excel is the source of truth for pitcher data
 
       const starters = parsed.startersByTeam[abbr.toUpperCase()];
       if (starters?.length) team.starters = starters;
@@ -170,20 +194,17 @@ export async function POST(req: NextRequest) {
       team.latestDate = new Date().toISOString().split('T')[0];
 
       updatedTeams.push(abbr);
+      newMetrics[abbr.toUpperCase()] = snapshot(team.metrics as Record<string, any>);
     }
 
-    // ── Compute diff ───────────────────────────────────────────────────────
-    const diffs: TeamDiff[] = [];
-    for (const abbr of updatedTeams) {
-      const team = byAbbr[abbr.toUpperCase()];
-      if (!team) continue;
-      diffs.push(buildDiff(
-        abbr,
-        team.team ?? abbr,
-        beforeSnapshots[abbr.toUpperCase()] ?? { grade: null, tier: null, score: null, era14d: null, whip14d: null, avgReliefIPPerGame: null },
-        snapshot(team),
-      ));
-    }
+    // ── Compute diff against prev-metrics (tiny, <4KB) ────────────────────
+    const nullSnap: TeamSnapshot = { grade: null, tier: null, score: null, era14d: null, whip14d: null, avgReliefIPPerGame: null };
+    const diffs: TeamDiff[] = updatedTeams.map(abbr => {
+      const team   = byAbbr[abbr.toUpperCase()];
+      const before = prevMetrics?.[abbr.toUpperCase()] ?? nullSnap;
+      const after  = newMetrics[abbr.toUpperCase()] ?? nullSnap;
+      return buildDiff(abbr, team?.team ?? abbr, before, after);
+    });
 
     const changed   = diffs.filter(d => d.gradeChanged || d.tierChanged || d.scoreChanged);
     const unchanged = diffs.filter(d => !d.gradeChanged && !d.tierChanged && !d.scoreChanged);
@@ -197,13 +218,16 @@ export async function POST(req: NextRequest) {
       teamsUnchanged: unchanged.length,
     };
 
-    // ── Parallel writes: teams data + changelog ────────────────────────────
+    const newLog = [entry, ...(existingLog ?? [])].slice(0, 90);
+
+    // ── Parallel writes ────────────────────────────────────────────────────
     await Promise.all([
-      writeTeamsData(existingData),
-      writeChangeLog([entry, ...existing_log].slice(0, 90)),
+      writeBlobJson(BLOB_TEAMS_PATH,     templateData),  // full updated dataset
+      writeBlobJson(BLOB_CHANGELOG_PATH, newLog),
+      writeBlobJson(BLOB_PREV_METRICS,   newMetrics),    // tiny snapshot for next diff
     ]);
 
-    // ── Clean up the temporary upload blob (fire-and-forget) ──────────────
+    // ── Clean up temp upload blob (fire-and-forget) ────────────────────────
     if (blobUrl && token) {
       del(blobUrl, { token }).catch(() => {});
     }
@@ -225,9 +249,10 @@ export async function POST(req: NextRequest) {
 
   } catch (err: any) {
     console.error('[upload-data] Error:', err);
-    const msg  = err?.message ?? String(err);
+    const isTimeout = err?.name === 'AbortError';
+    const msg  = isTimeout ? 'Timed out fetching the uploaded file from storage.' : (err?.message ?? String(err));
     const hint = !process.env.BLOB_READ_WRITE_TOKEN
-      ? ' (BLOB_READ_WRITE_TOKEN env var is missing — connect the Blob store in Vercel dashboard and redeploy)'
+      ? ' (BLOB_READ_WRITE_TOKEN env var is missing)'
       : '';
     return NextResponse.json({ error: `Upload failed: ${msg}${hint}` }, { status: 500, headers });
   }

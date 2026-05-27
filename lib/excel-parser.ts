@@ -79,20 +79,35 @@ function cellNum(v: unknown): number {
   return isNaN(n) ? 0 : n;
 }
 
-/** Convert an XLSX cell value to ISO date string "YYYY-MM-DD". */
+/** Convert an XLSX cell value to ISO date string "YYYY-MM-DD".
+ * cellDates is disabled for speed, so dates arrive as numeric Excel serials. */
 function toIsoDate(v: unknown): string | null {
   if (v == null) return null;
-  // XLSX with cellDates:true returns JS Date objects for date cells
+
+  // JS Date (legacy, kept for safety)
   if (v instanceof Date) {
-    const y = v.getFullYear();
-    const m = String(v.getMonth() + 1).padStart(2, "0");
-    const d = String(v.getDate()).padStart(2, "0");
+    const y = v.getUTCFullYear();
+    const m = String(v.getUTCMonth() + 1).padStart(2, "0");
+    const d = String(v.getUTCDate()).padStart(2, "0");
     return `${y}-${m}-${d}`;
   }
+
+  // Excel serial date number (days since 1900-01-01, with Excel leap-year bug)
+  // Range roughly 2015-01-01 (42005) to 2030-12-31 (47848)
+  if (typeof v === "number" && v > 42000 && v < 48000) {
+    // (serial - 25569) converts from Excel epoch to Unix epoch days
+    const dt = new Date(Math.round((v - 25569) * 86_400_000));
+    const y  = dt.getUTCFullYear();
+    const mo = String(dt.getUTCMonth() + 1).padStart(2, "0");
+    const d  = String(dt.getUTCDate()).padStart(2, "0");
+    return `${y}-${mo}-${d}`;
+  }
+
+  // String formats: "2026-03-25" or "2026-03-25 00:00:00"
   const s = String(v).trim();
-  // "2026-03-25 00:00:00" or "2026-03-25"
   const m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (m) return `${m[1]}-${m[2]}-${m[3]}`;
+
   return null;
 }
 
@@ -128,7 +143,7 @@ export interface ParsedUpload {
 // ─── Main Parser ───────────────────────────────────────────────────────────────
 
 export function parseExcelBuffer(buffer: ArrayBuffer): ParsedUpload {
-  const workbook = XLSX.read(buffer, { type: "array", cellDates: true });
+  const workbook = XLSX.read(buffer, { type: "array", dense: true });  // cellDates:false for speed — dates handled as serials below
 
   const warnings: string[] = [];
   const pitchersByTeam:  Record<string, Pitcher[]>    = {};
