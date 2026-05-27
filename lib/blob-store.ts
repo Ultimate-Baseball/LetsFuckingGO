@@ -9,7 +9,7 @@
  * a Blob store to this project in Vercel Dashboard → Storage).
  */
 
-import { put, list } from '@vercel/blob';
+import { put, head } from '@vercel/blob';
 import mlbTeamsFallback  from '@/data/mlb-teams.json';
 import changeLogFallback from '@/data/change-log.json';
 
@@ -41,25 +41,24 @@ export async function writeBlobJson(pathname: string, data: unknown): Promise<vo
 
 /**
  * Read JSON from Blob by pathname.
- * Uses list() to look up the URL, then fetches with Authorization header
- * for private stores. Returns null if the blob doesn't exist yet.
+ * Uses head() for a direct single-blob lookup — much faster than list()
+ * which scans the entire store. Returns null if the blob doesn't exist yet.
  */
 export async function readBlobJson<T>(pathname: string): Promise<T | null> {
   const token = process.env.BLOB_READ_WRITE_TOKEN;
   if (!token) return null;
 
   try {
-    const { blobs } = await list({ prefix: pathname, token });
-    const blob = blobs.find(b => b.pathname === pathname);
-    if (!blob) return null;
-
-    const res = await fetch(blob.url, {
+    // head() does a direct lookup by pathname — O(1) vs list()'s O(n) prefix scan
+    const blobMeta = await head(pathname, { token });
+    const res = await fetch(blobMeta.url, {
       headers: { Authorization: `Bearer ${token}` },
       cache:   'no-store',
     });
     if (!res.ok) return null;
     return (await res.json()) as T;
   } catch {
+    // BlobNotFoundError when blob doesn't exist yet — return null (use fallback)
     return null;
   }
 }
