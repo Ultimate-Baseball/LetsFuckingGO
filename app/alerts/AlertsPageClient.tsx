@@ -260,6 +260,12 @@ function WatchListSection() {
 
   useEffect(() => { load(); }, [load]);
 
+  // Auto-refresh every 60 seconds
+  useEffect(() => {
+    const id = setInterval(() => load(), 60_000);
+    return () => clearInterval(id);
+  }, [load]);
+
   const entries = data
     ? (sevFilter === 'all' ? data.watchlist : data.watchlist.filter(e => e.severity === sevFilter))
     : [];
@@ -359,7 +365,7 @@ function WatchListSection() {
               </div>
 
               <p className="text-[10px] text-muted-foreground mt-3 text-center">
-                {data.total} pitcher{data.total !== 1 ? 's' : ''} flagged across all 32 teams · refreshes with each data upload
+                {data.total} pitcher{data.total !== 1 ? 's' : ''} flagged across all 32 teams · auto-refreshes every 60s
               </p>
             </>
           )}
