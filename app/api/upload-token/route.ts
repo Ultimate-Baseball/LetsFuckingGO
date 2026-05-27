@@ -8,7 +8,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { generateClientTokenFromReadWriteToken } from '@vercel/blob/client';
 
-export const runtime = 'nodejs';
+export const runtime     = 'nodejs';
+export const maxDuration = 60; // Vercel Pro — ensures token generation never times out
 
 const AUTH_COOKIE = 'ubt_auth_role';
 
