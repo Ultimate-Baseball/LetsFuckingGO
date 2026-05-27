@@ -62,7 +62,7 @@ interface ChangeLogEntry {
   teamsUnchanged: number;
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+// -- Helpers -------------------------------------------------------------------
 
 const TIER_LABEL: Record<string, string> = {
   veryLow: "Very Low", low: "Low", moderate: "Moderate",
@@ -80,7 +80,7 @@ const GRADE_COLOR: Record<string, string> = {
 function Arrow({ before, after }: { before: number | string | null; after: number | string | null }) {
   if (before === after || before == null || after == null) return <Minus className="w-3 h-3 text-muted-foreground" />;
   const up = typeof before === "number" && typeof after === "number" ? after > before : false;
-  // For grades: A > B > C > D > F (lower letter = better), so going A→F is worse (down arrow)
+  // For grades: A > B > C > D > F (lower letter = better), so going A->F is worse (down arrow)
   return up
     ? <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
     : <TrendingDown className="w-3.5 h-3.5 text-red-400" />;
@@ -105,11 +105,11 @@ function DiffRow({ diff }: { diff: TeamDiff }) {
       {/* Grade */}
       <div className="flex items-center gap-1">
         <span className={cn("font-bold", GRADE_COLOR[diff.before.grade ?? ""] ?? "text-muted-foreground")}>
-          {diff.before.grade ?? "—"}
+          {diff.before.grade ?? "--"}
         </span>
-        <span className="text-muted-foreground/40">→</span>
+        <span className="text-muted-foreground/40">-></span>
         <span className={cn("font-bold", GRADE_COLOR[diff.after.grade ?? ""] ?? "text-muted-foreground")}>
-          {diff.after.grade ?? "—"}
+          {diff.after.grade ?? "--"}
         </span>
         {diff.gradeChanged && <Arrow before={diff.before.grade} after={diff.after.grade} />}
       </div>
@@ -117,13 +117,13 @@ function DiffRow({ diff }: { diff: TeamDiff }) {
       {/* Tier */}
       <div className="flex items-center gap-1 flex-wrap">
         <span className={TIER_COLOR[diff.before.tier ?? ""] ?? "text-muted-foreground"}>
-          {TIER_LABEL[diff.before.tier ?? ""] ?? "—"}
+          {TIER_LABEL[diff.before.tier ?? ""] ?? "--"}
         </span>
         {diff.tierChanged && (
           <>
-            <span className="text-muted-foreground/40">→</span>
+            <span className="text-muted-foreground/40">-></span>
             <span className={TIER_COLOR[diff.after.tier ?? ""] ?? "text-muted-foreground"}>
-              {TIER_LABEL[diff.after.tier ?? ""] ?? "—"}
+              {TIER_LABEL[diff.after.tier ?? ""] ?? "--"}
             </span>
           </>
         )}
@@ -131,11 +131,11 @@ function DiffRow({ diff }: { diff: TeamDiff }) {
 
       {/* Score */}
       <div className="font-mono">
-        <span className="text-muted-foreground">{diff.before.score ?? "—"}</span>
+        <span className="text-muted-foreground">{diff.before.score ?? "--"}</span>
         {diff.scoreChanged && (
           <>
-            <span className="text-muted-foreground/40 mx-1">→</span>
-            <span className="text-foreground font-bold">{diff.after.score ?? "—"}</span>
+            <span className="text-muted-foreground/40 mx-1">-></span>
+            <span className="text-foreground font-bold">{diff.after.score ?? "--"}</span>
             <ScoreArrow before={diff.before.score} after={diff.after.score} />
           </>
         )}
@@ -143,17 +143,17 @@ function DiffRow({ diff }: { diff: TeamDiff }) {
 
       {/* WHIP */}
       <div className="font-mono text-muted-foreground">
-        {diff.before.whip14d?.toFixed(2) ?? "—"}
+        {diff.before.whip14d?.toFixed(2) ?? "--"}
         {diff.after.whip14d !== diff.before.whip14d && (
-          <span className="ml-1 text-foreground">→ {diff.after.whip14d?.toFixed(2) ?? "—"}</span>
+          <span className="ml-1 text-foreground">-> {diff.after.whip14d?.toFixed(2) ?? "--"}</span>
         )}
       </div>
 
       {/* Relief IP/G */}
       <div className="font-mono text-muted-foreground">
-        {diff.before.avgReliefIPPerGame?.toFixed(2) ?? "—"}
+        {diff.before.avgReliefIPPerGame?.toFixed(2) ?? "--"}
         {diff.after.avgReliefIPPerGame !== diff.before.avgReliefIPPerGame && (
-          <span className="ml-1 text-foreground">→ {diff.after.avgReliefIPPerGame?.toFixed(2) ?? "—"}</span>
+          <span className="ml-1 text-foreground">-> {diff.after.avgReliefIPPerGame?.toFixed(2) ?? "--"}</span>
         )}
       </div>
     </div>
@@ -199,7 +199,7 @@ function LogEntryCard({ entry, defaultOpen = false }: { entry: ChangeLogEntry; d
           <Calendar className="w-4 h-4 text-muted-foreground flex-shrink-0" />
           <div>
             <div className="text-sm font-semibold text-foreground">{date}</div>
-            <div className="text-xs text-muted-foreground">{entry.filename} · {entry.teamsUpdated} teams processed</div>
+            <div className="text-xs text-muted-foreground">{entry.filename} . {entry.teamsUpdated} teams processed</div>
           </div>
         </div>
         <div className="flex items-center gap-3">
@@ -234,7 +234,7 @@ function LogEntryCard({ entry, defaultOpen = false }: { entry: ChangeLogEntry; d
   );
 }
 
-// ── Main Component ────────────────────────────────────────────────────────────
+// -- Main Component ------------------------------------------------------------
 
 export default function AdminPageClient() {
   const [status,       setStatus]       = useState<UploadStatus>("idle");
@@ -285,18 +285,16 @@ export default function AdminPageClient() {
     setStatus("uploading");
     setResult(null);
 
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-
-    // 90-second timeout — the Pro 60s function budget + network transit margin
+    // 90-second timeout -- the Pro 60s function budget + network transit margin
     const ctrl  = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 90_000);
     try {
       let res: Response;
       try {
-        res = await fetch("/api/upload-data", {
+        res = await fetch(`/api/upload-data?filename=${encodeURIComponent(selectedFile.name)}`, {
           method:      "POST",
-          body:        formData,
+          headers:     { "Content-Type": "application/octet-stream" },
+          body:        selectedFile,
           signal:      ctrl.signal,
           credentials: "include",
         });
@@ -314,12 +312,13 @@ export default function AdminPageClient() {
       setStatus(data.success ? "success" : "error");
       if (data.success) {
         setSelectedFile(null);
+        window.dispatchEvent(new CustomEvent("ubt-data-updated"));
       }
     } catch (err: any) {
       clearTimeout(timer);
       const isAbort = err?.name === "AbortError";
       const errMsg  = isAbort
-        ? "Request timed out. The server is still processing — wait 30 seconds and check if the data updated, or try again."
+        ? "Request timed out. The server is still processing -- wait 30 seconds and check if the data updated, or try again."
         : (err?.message ?? "Could not reach server");
       setResult({ success: false, error: `Upload failed: ${errMsg}` });
       setStatus("error");
@@ -348,7 +347,7 @@ export default function AdminPageClient() {
           <div>
             <h1 className="text-2xl font-black text-foreground">Data Admin</h1>
             <p className="text-muted-foreground text-sm">
-              {activeTab === "upload" ? "Upload daily bullpen spreadsheet · Recalculates all health tiers & grades" : "Manage user accounts, roles, and permissions"}
+              {activeTab === "upload" ? "Upload daily bullpen spreadsheet . Recalculates all health tiers & grades" : "Manage user accounts, roles, and permissions"}
             </p>
           </div>
         </div>
@@ -388,9 +387,9 @@ export default function AdminPageClient() {
             <div className="text-muted-foreground space-y-1">
               <div><span className="font-semibold text-foreground">How it works:</span> Upload your daily .xlsx spreadsheet and the app automatically re-runs all health tier and grade calculations before updating the live dashboard.</div>
               <div className="text-xs mt-2 space-y-0.5">
-                <div>• <strong className="text-foreground">Rows 4–109:</strong> Relief pitchers — used in all bullpen calculations</div>
-                <div>• <strong className="text-foreground">Rows 110–181:</strong> Starting pitchers — stored separately, not used in bullpen metrics</div>
-                <div>• <strong className="text-orange-400">Rows 182+:</strong> Injured List players — shown on team pages only</div>
+                <div>* <strong className="text-foreground">Rows 4-109:</strong> Relief pitchers -- used in all bullpen calculations</div>
+                <div>* <strong className="text-foreground">Rows 110-181:</strong> Starting pitchers -- stored separately, not used in bullpen metrics</div>
+                <div>* <strong className="text-orange-400">Rows 182+:</strong> Injured List players -- shown on team pages only</div>
               </div>
             </div>
           </div>
@@ -418,7 +417,7 @@ export default function AdminPageClient() {
                 <FileSpreadsheet className="w-10 h-10 text-emerald-400" />
                 <div className="text-left">
                   <div className="font-bold text-foreground">{selectedFile.name}</div>
-                  <div className="text-sm text-muted-foreground">{(selectedFile.size / 1024).toFixed(1)} KB · Ready to upload</div>
+                  <div className="text-sm text-muted-foreground">{(selectedFile.size / 1024).toFixed(1)} KB . Ready to upload</div>
                 </div>
               </div>
               <button onClick={(e) => { e.stopPropagation(); resetForm(); }} className="text-xs text-muted-foreground hover:text-foreground transition-colors underline">
@@ -456,7 +455,7 @@ export default function AdminPageClient() {
             >
               {status === "uploading" ? (
                 <><RefreshCw className="w-4 h-4 animate-spin" />
-                  "Processing… (up to 60s)"
+                  {"Processing... (up to 60s)"}
                 </>
               ) : (
                 <><BarChart3 className="w-4 h-4" />Upload &amp; Recalculate All Stats</>
@@ -465,7 +464,7 @@ export default function AdminPageClient() {
           </div>
         )}
 
-        {/* ── Result Panel ─────────────────────────────────────────────────── */}
+        {/* -- Result Panel --------------------------------------------------- */}
         {result && (
           <div className={cn(
             "mt-4 rounded-xl border p-4",
@@ -498,7 +497,7 @@ export default function AdminPageClient() {
                   </div>
                 )}
 
-                {/* ── DIFF SECTION ──────────────────────────────────────── */}
+                {/* -- DIFF SECTION ---------------------------------------- */}
                 {result.success && (
                   <div className="mt-4 border-t border-border/30 pt-4">
                     <div className="flex items-center gap-2 mb-1">
@@ -508,7 +507,7 @@ export default function AdminPageClient() {
 
                     {changedDiffs.length === 0 ? (
                       <p className="text-sm text-muted-foreground">
-                        ✓ All {result.stats?.updatedTeams} teams recalculated — no metric changes detected. Data is up to date.
+                        v All {result.stats?.updatedTeams} teams recalculated -- no metric changes detected. Data is up to date.
                       </p>
                     ) : (
                       <>
@@ -563,7 +562,7 @@ export default function AdminPageClient() {
                       <ul className="mt-2 space-y-1">
                         {result.warnings!.map((w, i) => (
                           <li key={i} className="text-xs text-amber-300/80 flex items-start gap-1.5">
-                            <span className="text-amber-400/50 mt-0.5">•</span> {w}
+                            <span className="text-amber-400/50 mt-0.5">*</span> {w}
                           </li>
                         ))}
                       </ul>
@@ -577,7 +576,7 @@ export default function AdminPageClient() {
             <div className="mt-4 flex flex-wrap gap-2">
               {result.success && (
                 <a href="/" className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors">
-                  View Live Dashboard →
+                  View Live Dashboard ->
                 </a>
               )}
               <button onClick={resetForm} className="px-4 py-2 rounded-lg border border-border/50 text-sm text-muted-foreground hover:text-foreground hover:border-border transition-colors">
@@ -587,7 +586,7 @@ export default function AdminPageClient() {
           </div>
         )}
 
-        {/* ── CHANGE LOG HISTORY ──────────────────────────────────────────── */}
+        {/* -- CHANGE LOG HISTORY -------------------------------------------- */}
         <div className="mt-10">
           <div className="flex items-center gap-2 mb-4">
             <History className="w-5 h-5 text-muted-foreground" />
@@ -601,7 +600,7 @@ export default function AdminPageClient() {
 
           {logLoading ? (
             <div className="flex items-center gap-2 text-sm text-muted-foreground py-8 justify-center">
-              <RefreshCw className="w-4 h-4 animate-spin" /> Loading history…
+              <RefreshCw className="w-4 h-4 animate-spin" /> Loading history...
             </div>
           ) : log.length === 0 ? (
             <div className="border border-dashed border-border/40 rounded-xl p-8 text-center">
@@ -650,8 +649,8 @@ export default function AdminPageClient() {
               <div className="font-semibold text-foreground mb-1.5">Row Structure</div>
               <div className="space-y-2">
                 <div className="bg-muted/30 rounded-lg p-2.5">
-                  <div className="font-medium text-foreground mb-1">Rows 4–109: Relief Pitchers</div>
-                  <div className="font-medium text-blue-400 mb-1 mt-1">Rows 110–181: Starting Pitchers</div>
+                  <div className="font-medium text-foreground mb-1">Rows 4-109: Relief Pitchers</div>
+                  <div className="font-medium text-blue-400 mb-1 mt-1">Rows 110-181: Starting Pitchers</div>
                   <p>Starters are stored for future use but not included in any bullpen calculations.</p>
                 </div>
                 <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-2.5">
