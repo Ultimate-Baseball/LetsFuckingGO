@@ -4,20 +4,24 @@
  * Accepts a multipart form upload with field "file" (xlsx/xls).
  * Parses relief pitchers (rows 4-109), recalculates all metrics,
  * computes a before/after diff, and appends to the daily change log.
+ *
+ * Data is persisted to Vercel Blob (not the read-only serverless filesystem).
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile, readFile } from "fs/promises";
-import path from "path";
 import { parseExcelBuffer } from "@/lib/excel-parser";
 import { computeTeamMetrics } from "@/lib/calculations";
+import {
+  readTeamsData,
+  writeTeamsData,
+  readChangeLog,
+  writeChangeLog,
+} from "@/lib/blob-store";
 import type { TeamData } from "@/lib/types";
 
 export const runtime = "nodejs";
 
-const DATA_PATH     = path.join(process.cwd(), "data", "mlb-teams.json");
-const LOG_PATH      = path.join(process.cwd(), "data", "change-log.json");
-const AUTH_COOKIE   = "ubt_auth_role";
+const AUTH_COOKIE = "ubt_auth_role";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -41,11 +45,11 @@ export interface TeamDiff {
 }
 
 export interface ChangeLogEntry {
-  date:          string;        // YYYY-MM-DD
-  timestamp:     string;        // ISO
-  filename:      string;
-  teamsUpdated:  number;
-  teamsChanged:  TeamDiff[];
+  date:           string;   // YYYY-MM-DD
+  timestamp:      string;   // ISO
+  filename:       string;
+  teamsUpdated:   number;
+  teamsChanged:   TeamDiff[];
   teamsUnchanged: number;
 }
 
@@ -83,20 +87,6 @@ function buildDiff(
   };
 }
 
-async function appendToLog(entry: ChangeLogEntry): Promise<void> {
-  let log: ChangeLogEntry[] = [];
-  try {
-    const raw = await readFile(LOG_PATH, "utf-8");
-    log = JSON.parse(raw);
-  } catch {
-    // file doesn't exist yet — start fresh
-  }
-  log.unshift(entry); // newest first
-  // keep last 90 days / 90 entries max
-  if (log.length > 90) log = log.slice(0, 90);
-  await writeFile(LOG_PATH, JSON.stringify(log, null, 2), "utf-8");
-}
-
 // ── Route ─────────────────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
@@ -126,18 +116,15 @@ export async function POST(req: NextRequest) {
     if (file.size > 20 * 1024 * 1024)
       return NextResponse.json({ error: "File too large. Maximum 20MB." }, { status: 413 });
 
-    const safeName = path.basename(file.name);
-    if (safeName !== file.name || file.name.includes(".."))
-      return NextResponse.json({ error: "Invalid filename." }, { status: 400 });
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
 
-    // ── Load existing data ──────────────────────────────────────────────────
-    const existingRaw = await readFile(DATA_PATH, "utf-8");
-    const existingData: Record<string, TeamData> = JSON.parse(existingRaw);
+    // ── Load existing data from Blob (or bundled fallback) ──────────────────
+    const existingData = await readTeamsData();
 
     // Build abbr-indexed lookup + snapshot BEFORE metrics
     const byAbbr: Record<string, TeamData> = {};
     const beforeSnapshots: Record<string, TeamSnapshot> = {};
-    for (const t of Object.values(existingData)) {
+    for (const t of Object.values(existingData) as TeamData[]) {
       if (t.abbr) {
         byAbbr[t.abbr.toUpperCase()] = t;
         beforeSnapshots[t.abbr.toUpperCase()] = snapshot(t);
@@ -173,16 +160,12 @@ export async function POST(req: NextRequest) {
         };
       });
 
-      // Store starters for future use (not used in bullpen calcs)
       const starters = parsed.startersByTeam[abbr.toUpperCase()];
       if (starters && starters.length > 0) team.starters = starters;
 
-      // Relief IL only (rows 183–195) — used for bullpen health metrics and display
-      // Starting pitcher IL (rows 196–202) intentionally excluded from bullpen calculations
       const reliefILPlayers = parsed.reliefILByTeam[abbr.toUpperCase()] ?? [];
       team.dl = reliefILPlayers;
 
-      // Recalculate — starters intentionally NOT passed (relief-only metrics)
       const newMetrics = computeTeamMetrics(pitchers, reliefILPlayers.length);
       team.metrics = { ...team.metrics, ...newMetrics };
 
@@ -198,20 +181,26 @@ export async function POST(req: NextRequest) {
       const team  = byAbbr[abbr.toUpperCase()];
       if (!team) continue;
       const after = snapshot(team);
-      const diff  = buildDiff(abbr, team.team ?? abbr, beforeSnapshots[abbr.toUpperCase()] ?? {
-        grade: null, tier: null, score: null,
-        era14d: null, whip14d: null, avgReliefIPPerGame: null,
-      }, after);
+      const diff  = buildDiff(
+        abbr,
+        team.team ?? abbr,
+        beforeSnapshots[abbr.toUpperCase()] ?? {
+          grade: null, tier: null, score: null,
+          era14d: null, whip14d: null, avgReliefIPPerGame: null,
+        },
+        after
+      );
       diffs.push(diff);
     }
 
     const changed   = diffs.filter(d => d.gradeChanged || d.tierChanged || d.scoreChanged);
     const unchanged = diffs.filter(d => !d.gradeChanged && !d.tierChanged && !d.scoreChanged);
 
-    // ── Persist data ────────────────────────────────────────────────────────
-    await writeFile(DATA_PATH, JSON.stringify(existingData, null, 2), "utf-8");
+    // ── Persist to Blob ─────────────────────────────────────────────────────
+    await writeTeamsData(existingData);
 
     // ── Append to change log ────────────────────────────────────────────────
+    const existing_log = await readChangeLog<ChangeLogEntry>();
     const entry: ChangeLogEntry = {
       date:           new Date().toISOString().split("T")[0],
       timestamp:      new Date().toISOString(),
@@ -220,7 +209,8 @@ export async function POST(req: NextRequest) {
       teamsChanged:   changed,
       teamsUnchanged: unchanged.length,
     };
-    await appendToLog(entry);
+    const updated_log = [entry, ...existing_log].slice(0, 90);
+    await writeChangeLog(updated_log);
 
     return NextResponse.json({
       success: true,
@@ -231,16 +221,16 @@ export async function POST(req: NextRequest) {
       diff:      { changed, unchanged: unchanged.map(d => d.abbr) },
       stats: {
         ...parsed.stats,
-        updatedTeams:  updatedTeams.length,
-        skippedTeams:  skippedTeams.length,
-        changedTeams:  changed.length,
+        updatedTeams:   updatedTeams.length,
+        skippedTeams:   skippedTeams.length,
+        changedTeams:   changed.length,
         unchangedTeams: unchanged.length,
       },
     });
   } catch (err: any) {
     console.error("[upload-data] Error:", err);
     return NextResponse.json(
-      { error: "Internal server error processing file." },
+      { error: `Upload failed: ${err?.message ?? "Internal server error"}` },
       { status: 500 }
     );
   }

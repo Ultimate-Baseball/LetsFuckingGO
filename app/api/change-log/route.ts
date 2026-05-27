@@ -4,12 +4,10 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { readFile } from "fs/promises";
-import path from "path";
+import { readChangeLog } from "@/lib/blob-store";
 
 export const runtime = "nodejs";
 
-const LOG_PATH    = path.join(process.cwd(), "data", "change-log.json");
 const AUTH_COOKIE = "ubt_auth_role";
 
 function isAdmin(req: NextRequest): boolean {
@@ -24,11 +22,9 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const raw = await readFile(LOG_PATH, "utf-8");
-    const log = JSON.parse(raw);
+    const log = await readChangeLog();
     return NextResponse.json({ success: true, log });
   } catch {
-    // File doesn't exist yet — return empty log
     return NextResponse.json({ success: true, log: [] });
   }
 }

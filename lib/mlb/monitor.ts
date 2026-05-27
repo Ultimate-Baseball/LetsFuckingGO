@@ -4,18 +4,12 @@
 // ============================================================
 
 import { randomUUID } from 'crypto';
-import { promises as fs } from 'fs';
-import path from 'path';
 import type { BullpenAlert, MonitorState, MonitorPitcherData, AlertThresholds } from './types';
 import { DEFAULT_THRESHOLDS } from './types';
 import { getAllLiveGames } from './api';
 
-// ─── File-based State ─────────────────────────────────────────────────────────
-// Matches your existing data/*.json pattern — no extra infra needed
-
-const DATA_DIR      = path.join(process.cwd(), 'data');
-const STATE_FILE    = path.join(DATA_DIR, 'monitor-state.json');
-const ALERTS_FILE   = path.join(DATA_DIR, 'alerts-today.json');
+// ─── Blob-based State ────────────────────────────────────────────────────────
+// Vercel serverless filesystem is read-only; all writes go to Vercel Blob.
 
 function todayET(): string {
   return new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
@@ -23,9 +17,9 @@ function todayET(): string {
 
 export async function loadMonitorState(): Promise<MonitorState> {
   try {
-    const raw   = await fs.readFile(STATE_FILE, 'utf-8');
-    const state = JSON.parse(raw) as MonitorState;
-    // Reset daily
+    const { readBlobJson, BLOB_MONITOR_STATE } = await import('@/lib/blob-store');
+    const state = await readBlobJson<MonitorState>(BLOB_MONITOR_STATE);
+    if (!state) return { activePitchers: {}, lastRunAt: new Date().toISOString(), alertsSentToday: 0, date: todayET() };
     if (state.date !== todayET()) {
       return { activePitchers: {}, lastRunAt: new Date().toISOString(), alertsSentToday: 0, date: todayET() };
     }
@@ -36,29 +30,29 @@ export async function loadMonitorState(): Promise<MonitorState> {
 }
 
 export async function saveMonitorState(state: MonitorState): Promise<void> {
-  try { await fs.writeFile(STATE_FILE, JSON.stringify(state, null, 2)); } catch {}
+  try {
+    const { writeBlobJson, BLOB_MONITOR_STATE } = await import('@/lib/blob-store');
+    await writeBlobJson(BLOB_MONITOR_STATE, state);
+  } catch {}
 }
 
 export async function persistAlert(alert: BullpenAlert): Promise<void> {
   try {
+    const { readBlobJson, writeBlobJson, BLOB_ALERTS_TODAY } = await import('@/lib/blob-store');
+    const existing = await readBlobJson<{ date: string; alerts: BullpenAlert[] }>(BLOB_ALERTS_TODAY);
     let alerts: BullpenAlert[] = [];
-    try {
-      const raw = await fs.readFile(ALERTS_FILE, 'utf-8');
-      const parsed = JSON.parse(raw);
-      // Clear if stale (different day)
-      if (parsed.date === todayET()) alerts = parsed.alerts ?? [];
-    } catch {}
+    if (existing?.date === todayET()) alerts = existing.alerts ?? [];
     alerts.unshift(alert);
-    await fs.writeFile(ALERTS_FILE, JSON.stringify({ date: todayET(), alerts: alerts.slice(0, 200) }, null, 2));
+    await writeBlobJson(BLOB_ALERTS_TODAY, { date: todayET(), alerts: alerts.slice(0, 200) });
   } catch {}
 }
 
 export async function loadTodayAlerts(): Promise<BullpenAlert[]> {
   try {
-    const raw    = await fs.readFile(ALERTS_FILE, 'utf-8');
-    const parsed = JSON.parse(raw);
-    if (parsed.date !== todayET()) return [];
-    return parsed.alerts ?? [];
+    const { readBlobJson, BLOB_ALERTS_TODAY } = await import('@/lib/blob-store');
+    const data = await readBlobJson<{ date: string; alerts: BullpenAlert[] }>(BLOB_ALERTS_TODAY);
+    if (!data || data.date !== todayET()) return [];
+    return data.alerts ?? [];
   } catch { return []; }
 }
 
@@ -67,9 +61,8 @@ export async function loadTodayAlerts(): Promise<BullpenAlert[]> {
 
 export async function getUBTPitcherData(): Promise<MonitorPitcherData[]> {
   try {
-    const teamsFile = path.join(DATA_DIR, 'mlb-teams.json');
-    const raw       = await fs.readFile(teamsFile, 'utf-8');
-    const teams: Record<string, any> = JSON.parse(raw);
+    const { readTeamsData } = await import('@/lib/blob-store');
+    const teams: Record<string, any> = await readTeamsData();
 
     // Lazy-load calculation functions to avoid circular deps
     const { computePitcherHealthTier, computePitcherAvailability } = await import('@/lib/health');
