@@ -220,11 +220,20 @@ export async function POST(req: NextRequest) {
 
     const newLog = [entry, ...(existingLog ?? [])].slice(0, 90);
 
+    // ── Reconstruct full data with original key structure + updated team objects ──
+    // templateData keys are full team names ("Baltimore Orioles"), byAbbr keys are "BAL".
+    // We need to write the modified byAbbr objects back under their original keys.
+    const updatedTeamsData: Record<string, any> = {};
+    for (const [teamName, team] of Object.entries(templateData)) {
+      const abbr = (team as any).abbr?.toUpperCase();
+      updatedTeamsData[teamName] = (abbr && byAbbr[abbr]) ? byAbbr[abbr] : team;
+    }
+
     // ── Parallel writes ────────────────────────────────────────────────────
     await Promise.all([
-      writeBlobJson(BLOB_TEAMS_PATH,     templateData),  // full updated dataset
+      writeBlobJson(BLOB_TEAMS_PATH,     updatedTeamsData),  // full updated dataset
       writeBlobJson(BLOB_CHANGELOG_PATH, newLog),
-      writeBlobJson(BLOB_PREV_METRICS,   newMetrics),    // tiny snapshot for next diff
+      writeBlobJson(BLOB_PREV_METRICS,   newMetrics),         // tiny snapshot for next diff
     ]);
 
     // ── Clean up temp upload blob (fire-and-forget) ────────────────────────
