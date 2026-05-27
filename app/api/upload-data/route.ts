@@ -1,8 +1,8 @@
 /**
  * POST /api/upload-data
- * ADMIN ONLY — accepts multipart/form-data with a "file" field (Excel upload).
+ * ADMIN ONLY -- accepts application/octet-stream body (Excel upload).
  *
- * SPEED OPTIMIZATIONS (Vercel Pro — 60s function budget):
+ * SPEED OPTIMIZATIONS (Vercel Pro -- 60s function budget):
  *
  *  1. We do NOT read the existing teams blob (1.25MB) before writing.
  *     Instead, the bundled `mlb-teams.json` (ships with every deploy) is
@@ -14,8 +14,8 @@
  *
  *  3. All reads are parallel; all writes are parallel (fire-and-forget del).
  *
- *  4. Excel files for 181 rows are typically <500 KB — well under Vercel's
- *     4.5 MB body limit — so we accept the file directly in the request body
+ *  4. Excel files for 181 rows are typically <500 KB -- well under Vercel's
+ *     4.5 MB body limit -- so we accept the file directly in the request body
  *     instead of a separate browser-to-Blob intermediary step.
  */
 
@@ -32,12 +32,12 @@ import mlbTeamsTemplate from '@/data/mlb-teams.json';
 import type { TeamData } from '@/lib/types';
 
 export const runtime     = 'nodejs';
-export const maxDuration = 60; // Vercel Pro — enforces the 60s limit (Hobby hard-caps at 10s)
+export const maxDuration = 60; // Vercel Pro -- enforces the 60s limit (Hobby hard-caps at 10s)
 
 const AUTH_COOKIE        = 'ubt_auth_role';
 const BLOB_PREV_METRICS  = 'ubt/prev-metrics.json';
 
-// ── Types ─────────────────────────────────────────────────────────────────────
+// -- Types ---------------------------------------------------------------------
 
 export interface TeamSnapshot {
   grade:              string | null;
@@ -69,7 +69,7 @@ export interface ChangeLogEntry {
 
 type PrevMetricsMap = Record<string, TeamSnapshot>;
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+// -- Helpers -------------------------------------------------------------------
 
 function isAdmin(req: NextRequest): boolean {
   const role = req.cookies.get(AUTH_COOKIE)?.value;
@@ -100,7 +100,7 @@ function buildDiff(
   };
 }
 
-// ── Route ─────────────────────────────────────────────────────────────────────
+// -- Route ---------------------------------------------------------------------
 
 export async function POST(req: NextRequest) {
   const headers = { 'Cache-Control': 'no-store' };
@@ -110,35 +110,31 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // ── Accept the Excel file directly from FormData ──────────────────────
-    const formData = await req.formData();
-    const fileField = formData.get('file');
+    // -- Accept the Excel file as raw bytes in the request body ------------
+    const filename    = req.nextUrl.searchParams.get('filename') ?? 'upload.xlsx';
+    const safeName    = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const arrayBuffer = await req.arrayBuffer();
 
-    if (!fileField || typeof fileField === 'string') {
-      return NextResponse.json({ error: 'Missing or invalid file field in form data.' }, { status: 400, headers });
+    if (!arrayBuffer || arrayBuffer.byteLength === 0) {
+      return NextResponse.json({ error: 'Empty request body -- no file received.' }, { status: 400, headers });
     }
 
-    const file        = fileField as File;
-    const filename    = file.name ?? 'upload.xlsx';
-    const safeName    = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
-    const arrayBuffer = await file.arrayBuffer();
-
-    // ── Parallel reads: prev-metrics + changelog ───────────────────────────
-    // We deliberately do NOT read the 1.25MB teams blob — we use the bundled
+    // -- Parallel reads: prev-metrics + changelog ---------------------------
+    // We deliberately do NOT read the 1.25MB teams blob -- we use the bundled
     // mlb-teams.json as a structural template instead (saves 2-4 seconds).
     const [prevMetrics, existingLog] = await Promise.all([
       readBlobJson<PrevMetricsMap>(BLOB_PREV_METRICS),        // ~3 KB
       readBlobJson<ChangeLogEntry[]>(BLOB_CHANGELOG_PATH),    // ~50 KB
     ]);
 
-    // ── Build lookup from bundled template (no Blob read needed) ──────────
+    // -- Build lookup from bundled template (no Blob read needed) ----------
     const templateData  = mlbTeamsTemplate as Record<string, any>;
     const byAbbr: Record<string, TeamData> = {};
     for (const t of Object.values(templateData) as TeamData[]) {
       if (t.abbr) byAbbr[t.abbr.toUpperCase()] = JSON.parse(JSON.stringify(t)); // deep-clone
     }
 
-    // ── Parse upload ───────────────────────────────────────────────────────
+    // -- Parse upload -------------------------------------------------------
     const parsed = parseExcelBuffer(arrayBuffer);
 
     if (parsed.stats.teamsFound === 0) {
@@ -148,7 +144,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ── Apply updates from Excel onto template ─────────────────────────────
+    // -- Apply updates from Excel onto template -----------------------------
     const updatedTeams: string[] = [];
     const skippedTeams: string[] = [];
     const newMetrics:   PrevMetricsMap = {};
@@ -173,7 +169,7 @@ export async function POST(req: NextRequest) {
       newMetrics[abbr.toUpperCase()] = snapshot(team.metrics as Record<string, any>);
     }
 
-    // ── Compute diff against prev-metrics (tiny, <4KB) ────────────────────
+    // -- Compute diff against prev-metrics (tiny, <4KB) --------------------
     const nullSnap: TeamSnapshot = { grade: null, tier: null, score: null, era14d: null, whip14d: null, avgReliefIPPerGame: null };
     const diffs: TeamDiff[] = updatedTeams.map(abbr => {
       const team   = byAbbr[abbr.toUpperCase()];
@@ -196,7 +192,7 @@ export async function POST(req: NextRequest) {
 
     const newLog = [entry, ...(existingLog ?? [])].slice(0, 90);
 
-    // ── Reconstruct full data with original key structure + updated team objects ──
+    // -- Reconstruct full data with original key structure + updated team objects --
     // templateData keys are full team names ("Baltimore Orioles"), byAbbr keys are "BAL".
     // We need to write the modified byAbbr objects back under their original keys.
     const updatedTeamsData: Record<string, any> = {};
@@ -205,8 +201,8 @@ export async function POST(req: NextRequest) {
       updatedTeamsData[teamName] = (abbr && byAbbr[abbr]) ? byAbbr[abbr] : team;
     }
 
-    // ── Parallel writes — with 40s timeout so we fail fast rather than hitting
-    //    the 60s function limit silently if Blob is slow ─────────────────────
+    // -- Parallel writes -- with 40s timeout so we fail fast rather than hitting
+    //    the 60s function limit silently if Blob is slow ---------------------
     const writeDeadline = new Promise<never>((_, reject) =>
       setTimeout(() => reject(new Error('Blob write timed out after 40s')), 40_000)
     );
