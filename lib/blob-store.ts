@@ -10,8 +10,8 @@
  */
 
 import { put, list } from '@vercel/blob';
-import mlbTeamsFallback   from '@/data/mlb-teams.json';
-import changeLogFallback  from '@/data/change-log.json';
+import mlbTeamsFallback  from '@/data/mlb-teams.json';
+import changeLogFallback from '@/data/change-log.json';
 
 // ─── Blob pathnames (stable, no random suffix) ────────────────────────────────
 export const BLOB_TEAMS_PATH     = 'ubt/mlb-teams.json';
@@ -21,7 +21,7 @@ export const BLOB_ALERTS_TODAY   = 'ubt/alerts-today.json';
 
 // ─── Low-level helpers ────────────────────────────────────────────────────────
 
-/** Write any JSON object to Blob under a stable pathname. */
+/** Write any JSON object to Blob under a stable pathname. Uses compact JSON to minimize upload size. */
 export async function writeBlobJson(pathname: string, data: unknown): Promise<void> {
   const token = process.env.BLOB_READ_WRITE_TOKEN;
   if (!token) {
@@ -29,7 +29,8 @@ export async function writeBlobJson(pathname: string, data: unknown): Promise<vo
       'BLOB_READ_WRITE_TOKEN is not set. Connect the Blob store in Vercel Dashboard → Storage and redeploy.'
     );
   }
-  const json = JSON.stringify(data, null, 2);
+  // Compact JSON (no indent) reduces payload size and speeds up Blob writes
+  const json = JSON.stringify(data);
   await put(pathname, json, {
     access:          'public',
     addRandomSuffix: false,
@@ -40,9 +41,8 @@ export async function writeBlobJson(pathname: string, data: unknown): Promise<vo
 
 /**
  * Read JSON from Blob by pathname.
- * Uses list() to look up the URL (server-side, uses token automatically),
- * then fetches with Authorization header for private stores.
- * Returns null if the blob doesn't exist yet.
+ * Uses list() to look up the URL, then fetches with Authorization header
+ * for private stores. Returns null if the blob doesn't exist yet.
  */
 export async function readBlobJson<T>(pathname: string): Promise<T | null> {
   const token = process.env.BLOB_READ_WRITE_TOKEN;

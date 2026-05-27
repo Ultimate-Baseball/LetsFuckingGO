@@ -1,11 +1,15 @@
 /**
  * POST /api/upload-data
- * ADMIN ONLY — accepts { blobUrl: string } JSON body.
+ * ADMIN ONLY — accepts { blobUrl: string, filename?: string } JSON body.
  *
  * The Excel file is uploaded directly from the browser to Vercel Blob
  * (bypassing the 4.5 MB serverless body limit). This endpoint receives
  * the resulting blob URL, fetches the file server-side, parses it,
  * recalculates all metrics, builds a diff, and persists to Blob storage.
+ *
+ * Reads happen in parallel (Excel + teams + changelog).
+ * Writes happen in parallel (teams + changelog).
+ * maxDuration = 60 prevents the Vercel Hobby 10s timeout.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -20,7 +24,8 @@ import {
 } from '@/lib/blob-store';
 import type { TeamData } from '@/lib/types';
 
-export const runtime = 'nodejs';
+export const runtime    = 'nodejs';
+export const maxDuration = 60; // Vercel Hobby max — prevents timeout on large files
 
 const AUTH_COOKIE = 'ubt_auth_role';
 
@@ -103,21 +108,28 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing blobUrl in request body.' }, { status: 400, headers });
     }
 
-    // ── Fetch the Excel from Blob ──────────────────────────────────────────
-    const token = process.env.BLOB_READ_WRITE_TOKEN ?? '';
-    const fileRes = await fetch(blobUrl, {
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
-      cache: 'no-store',
-    });
+    const token    = process.env.BLOB_READ_WRITE_TOKEN ?? '';
+    const safeName = (filename ?? blobUrl.split('/').pop() ?? 'upload.xlsx').replace(/[^a-zA-Z0-9._-]/g, '_');
+
+    // ── Parallel reads: fetch Excel + load existing teams + load changelog ──
+    const [fileRes, existingData, existing_log] = await Promise.all([
+      fetch(blobUrl, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        cache: 'no-store',
+      }),
+      readTeamsData(),
+      readChangeLog<ChangeLogEntry>(),
+    ]);
+
     if (!fileRes.ok) {
-      return NextResponse.json({ error: `Failed to fetch uploaded file from Blob (${fileRes.status}).` }, { status: 500 });
+      return NextResponse.json(
+        { error: `Failed to fetch uploaded file from Blob (${fileRes.status}).` },
+        { status: 500 }
+      );
     }
     const arrayBuffer = await fileRes.arrayBuffer();
-    const safeName    = (filename ?? blobUrl.split('/').pop() ?? 'upload.xlsx').replace(/[^a-zA-Z0-9._-]/g, '_');
 
-    // ── Load existing data ─────────────────────────────────────────────────
-    const existingData = await readTeamsData();
-
+    // ── Build lookup maps ─────────────────────────────────────────────────
     const byAbbr: Record<string, TeamData> = {};
     const beforeSnapshots: Record<string, TeamSnapshot> = {};
     for (const t of Object.values(existingData) as TeamData[]) {
@@ -153,7 +165,7 @@ export async function POST(req: NextRequest) {
       const reliefIL = parsed.reliefILByTeam[abbr.toUpperCase()] ?? [];
       team.dl = reliefIL;
 
-      team.metrics  = { ...team.metrics, ...computeTeamMetrics(pitchers, reliefIL.length) };
+      team.metrics    = { ...team.metrics, ...computeTeamMetrics(pitchers, reliefIL.length) };
       team.cutoffDate = new Date().toISOString().split('T')[0];
       team.latestDate = new Date().toISOString().split('T')[0];
 
@@ -165,20 +177,17 @@ export async function POST(req: NextRequest) {
     for (const abbr of updatedTeams) {
       const team = byAbbr[abbr.toUpperCase()];
       if (!team) continue;
-      diffs.push(buildDiff(abbr, team.team ?? abbr,
+      diffs.push(buildDiff(
+        abbr,
+        team.team ?? abbr,
         beforeSnapshots[abbr.toUpperCase()] ?? { grade: null, tier: null, score: null, era14d: null, whip14d: null, avgReliefIPPerGame: null },
-        snapshot(team)
+        snapshot(team),
       ));
     }
 
     const changed   = diffs.filter(d => d.gradeChanged || d.tierChanged || d.scoreChanged);
     const unchanged = diffs.filter(d => !d.gradeChanged && !d.tierChanged && !d.scoreChanged);
 
-    // ── Persist teams data to Blob ─────────────────────────────────────────
-    await writeTeamsData(existingData);
-
-    // ── Append to change log ───────────────────────────────────────────────
-    const existing_log = await readChangeLog<ChangeLogEntry>();
     const entry: ChangeLogEntry = {
       date:           new Date().toISOString().split('T')[0],
       timestamp:      new Date().toISOString(),
@@ -187,10 +196,17 @@ export async function POST(req: NextRequest) {
       teamsChanged:   changed,
       teamsUnchanged: unchanged.length,
     };
-    await writeChangeLog([entry, ...existing_log].slice(0, 90));
 
-    // ── Clean up the temporary upload blob ────────────────────────────────
-    try { await del(blobUrl, { token }); } catch {}
+    // ── Parallel writes: teams data + changelog ────────────────────────────
+    await Promise.all([
+      writeTeamsData(existingData),
+      writeChangeLog([entry, ...existing_log].slice(0, 90)),
+    ]);
+
+    // ── Clean up the temporary upload blob (fire-and-forget) ──────────────
+    if (blobUrl && token) {
+      del(blobUrl, { token }).catch(() => {});
+    }
 
     return NextResponse.json({
       success:      true,
