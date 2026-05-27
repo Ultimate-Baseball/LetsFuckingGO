@@ -230,11 +230,18 @@ export async function POST(req: NextRequest) {
       updatedTeamsData[teamName] = (abbr && byAbbr[abbr]) ? byAbbr[abbr] : team;
     }
 
-    // ── Parallel writes ────────────────────────────────────────────────────
-    await Promise.all([
-      writeBlobJson(BLOB_TEAMS_PATH,     updatedTeamsData),  // full updated dataset
-      writeBlobJson(BLOB_CHANGELOG_PATH, newLog),
-      writeBlobJson(BLOB_PREV_METRICS,   newMetrics),         // tiny snapshot for next diff
+    // ── Parallel writes — with 40s timeout so we fail fast rather than hitting
+    //    the 60s function limit silently if Blob is slow ─────────────────────
+    const writeDeadline = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('Blob write timed out after 40s')), 40_000)
+    );
+    await Promise.race([
+      Promise.all([
+        writeBlobJson(BLOB_TEAMS_PATH,     updatedTeamsData),  // full updated dataset
+        writeBlobJson(BLOB_CHANGELOG_PATH, newLog),
+        writeBlobJson(BLOB_PREV_METRICS,   newMetrics),         // tiny snapshot for next diff
+      ]),
+      writeDeadline,
     ]);
 
     // ── Clean up temp upload blob (fire-and-forget) ────────────────────────
