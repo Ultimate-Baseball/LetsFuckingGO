@@ -6,8 +6,9 @@ import { cn } from "@/lib/utils";
 import {
   Upload, FileSpreadsheet, CheckCircle2, XCircle, AlertTriangle,
   RefreshCw, Shield, BarChart3, Activity, ChevronDown, ChevronUp,
-  TrendingUp, TrendingDown, Minus, History, Calendar,
+  TrendingUp, TrendingDown, Minus, History, Calendar, Users,
 } from "lucide-react";
+import UsersTab from "./UsersTab";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
 
@@ -244,6 +245,7 @@ export default function AdminPageClient() {
   const [showTeams,    setShowTeams]    = useState(false);
   const [log,          setLog]          = useState<ChangeLogEntry[]>([]);
   const [logLoading,   setLogLoading]   = useState(true);
+  const [activeTab,    setActiveTab]    = useState<"upload" | "users">("upload");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Load change log on mount
@@ -340,16 +342,46 @@ export default function AdminPageClient() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
 
         {/* Page Header */}
-        <div className="flex items-center gap-3 mb-2">
+        <div className="flex items-center gap-3 mb-6">
           <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
             <Shield className="w-5 h-5 text-primary" />
           </div>
           <div>
             <h1 className="text-2xl font-black text-foreground">Data Admin</h1>
-            <p className="text-muted-foreground text-sm">Upload daily bullpen spreadsheet · Recalculates all health tiers &amp; grades</p>
+            <p className="text-muted-foreground text-sm">
+              {activeTab === "upload" ? "Upload daily bullpen spreadsheet · Recalculates all health tiers & grades" : "Manage user accounts, roles, and permissions"}
+            </p>
           </div>
         </div>
 
+        {/* Tab Bar */}
+        <div className="flex gap-1 bg-muted/30 border border-border/50 p-1 rounded-xl mb-6">
+          {([
+            { id: "upload", label: "Data Upload", icon: Upload },
+            { id: "users",  label: "Users",       icon: Users  },
+          ] as const).map(({ id, label, icon: Icon }) => (
+            <button
+              key={id}
+              onClick={() => setActiveTab(id)}
+              className={cn(
+                "flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-all",
+                activeTab === id
+                  ? "bg-card border border-border/60 text-white shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <Icon className="w-4 h-4" />
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {/* Users Tab */}
+        {activeTab === "users" && <UsersTab />}
+
+        {/* Upload Tab */}
+        {activeTab === "upload" && (
+          <div>
         {/* Info Banner */}
         <div className="mb-6 bg-primary/5 border border-primary/20 rounded-xl p-4 text-sm">
           <div className="flex items-start gap-2">
@@ -630,6 +662,8 @@ export default function AdminPageClient() {
           </div>
         </div>
 
+        </div>
+        )}
       </div>
     </div>
   );

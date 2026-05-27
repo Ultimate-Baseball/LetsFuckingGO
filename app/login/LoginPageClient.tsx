@@ -1,20 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Eye, EyeOff, Lock, User, Activity } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, Activity } from "lucide-react";
 
 export default function LoginPageClient() {
   const router = useRouter();
   const params = useSearchParams();
-  const from = params.get("from") || "/";
+  const from   = params.get("from") || "/";
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username,     setUsername]     = useState("");
+  const [password,     setPassword]     = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [error,        setError]        = useState("");
+  const [loading,      setLoading]      = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,25 +22,24 @@ export default function LoginPageClient() {
     setError("");
 
     if (!username.trim() || !password.trim()) {
-      setError("Please enter both username and password.");
+      setError("Please enter your email/username and password.");
       setLoading(false);
       return;
     }
 
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
+      const res  = await fetch("/api/auth/login", {
+        method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: username.trim(), password }),
+        body:    JSON.stringify({ username: username.trim(), password }),
       });
-
       const data = await res.json();
 
       if (res.ok) {
         router.push(data.role === "admin" ? "/admin" : from === "/admin" ? "/" : from);
         router.refresh();
       } else {
-        setError(data.error || "Invalid username or password. Please try again.");
+        setError(data.error || "Invalid credentials. Please try again.");
       }
     } catch {
       setError("Unable to connect. Please check your connection and try again.");
@@ -68,19 +67,20 @@ export default function LoginPageClient() {
         {/* Form Card */}
         <div className="bg-card border border-border/50 rounded-2xl p-6 shadow-lg">
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Username */}
+
+            {/* Email / Username */}
             <div className="space-y-1.5">
               <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                Username
+                Email or Username
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                 <input
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter your username"
-                  autoComplete="username"
+                  placeholder="Email or username"
+                  autoComplete="username email"
                   autoFocus
                   required
                   className="w-full pl-10 pr-4 py-3 rounded-xl bg-muted/50 border border-border text-white placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors text-sm"
@@ -141,9 +141,19 @@ export default function LoginPageClient() {
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-6 space-y-2">
+        <div className="text-center mt-6 space-y-3">
+          {/* Sign up CTA */}
+          <div className="bg-card border border-border/50 rounded-xl px-4 py-3">
+            <p className="text-sm text-muted-foreground">
+              Don&apos;t have an account?{" "}
+              <Link href="/signup" className="text-primary hover:text-primary/80 font-semibold transition-colors">
+                Create one free →
+              </Link>
+            </p>
+          </div>
+
           <p className="text-xs text-muted-foreground/50">
-            Subscriber access required. Contact{" "}
+            Need help?{" "}
             <a href="mailto:support@ultimatebaseballtool.com" className="text-primary/70 hover:text-primary transition-colors">
               support@ultimatebaseballtool.com
             </a>
