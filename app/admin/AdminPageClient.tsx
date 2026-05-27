@@ -238,6 +238,7 @@ function LogEntryCard({ entry, defaultOpen = false }: { entry: ChangeLogEntry; d
 
 export default function AdminPageClient() {
   const [status,       setStatus]       = useState<UploadStatus>("idle");
+  const [uploadStep,   setUploadStep]   = useState<"token" | "upload" | "process" | null>(null);
   const [result,       setResult]       = useState<UploadResult | null>(null);
   const [dragOver,     setDragOver]     = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -284,13 +285,22 @@ export default function AdminPageClient() {
     if (!selectedFile) return;
     setStatus("uploading");
     setResult(null);
+    setUploadStep("token");
     try {
-      // Step 1: Get a short-lived client upload token from the server
-      const tokenRes = await fetch("/api/upload-token", {
+      // Step 1: Get a short-lived client upload token from the server (15s timeout)
+      const tokenCtrl = new AbortController();
+      const tokenTimer = setTimeout(() => tokenCtrl.abort(), 15_000);
+      let tokenRes: Response;
+      try {
+        tokenRes = await fetch("/api/upload-token", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ filename: selectedFile.name }),
-      });
+          signal: tokenCtrl.signal,
+        });
+      } finally {
+        clearTimeout(tokenTimer);
+      }
       if (!tokenRes.ok) {
         const e = await tokenRes.json().catch(() => ({}));
         throw new Error(e?.error ?? "Failed to get upload token");
@@ -298,16 +308,26 @@ export default function AdminPageClient() {
       const { clientToken, pathname } = await tokenRes.json();
 
       // Step 2: Upload file DIRECTLY to Blob from the browser (no 4.5 MB limit)
+      setUploadStep("upload");
       const { put } = await import("@vercel/blob/client");
-      const blob = await put(pathname, selectedFile, {
-        access: "public",
-        token:  clientToken,
-      });
+      const blobUploadCtrl = new AbortController();
+      const blobTimer = setTimeout(() => blobUploadCtrl.abort(), 60_000);
+      let blob: Awaited<ReturnType<typeof put>>;
+      try {
+        blob = await put(pathname, selectedFile, {
+          access: "public",
+          token:  clientToken,
+          abortSignal: blobUploadCtrl.signal,
+        });
+      } finally {
+        clearTimeout(blobTimer);
+      }
 
       // Step 3: Tell the server to process the uploaded Excel from Blob
-      // 30-second client-side timeout prevents silent forever-hang on Vercel
+      // 90-second timeout — server has 60s Pro budget + margin for network transit
+      setUploadStep("process");
       const uploadCtrl    = new AbortController();
-      const uploadTimeout = setTimeout(() => uploadCtrl.abort(), 30_000);
+      const uploadTimeout = setTimeout(() => uploadCtrl.abort(), 90_000);
       let res: Response;
       try {
         res = await fetch("/api/upload-data", {
@@ -336,8 +356,14 @@ export default function AdminPageClient() {
           .catch(() => {});
       }
     } catch (err: any) {
-      setResult({ success: false, error: `Upload failed: ${err?.message ?? "Could not reach server"}` });
+      const isAbort = err?.name === "AbortError";
+      const errMsg = isAbort
+        ? "Request timed out. The server is still processing — wait 30 seconds and check if the data updated, or try again."
+        : (err?.message ?? "Could not reach server");
+      setResult({ success: false, error: `Upload failed: ${errMsg}` });
       setStatus("error");
+    } finally {
+      setUploadStep(null);
     }
   };
 
@@ -470,7 +496,9 @@ export default function AdminPageClient() {
               )}
             >
               {status === "uploading" ? (
-                <><RefreshCw className="w-4 h-4 animate-spin" />Uploading &amp; Recalculating…</>
+                <><RefreshCw className="w-4 h-4 animate-spin" />
+                  {uploadStep === "token" ? "Authorizing…" : uploadStep === "upload" ? "Uploading file…" : "Recalculating… (up to 60s)"}
+                </>
               ) : (
                 <><BarChart3 className="w-4 h-4" />Upload &amp; Recalculate All Stats</>
               )}
