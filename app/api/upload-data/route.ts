@@ -1,6 +1,6 @@
 /**
  * POST /api/upload-data
- * ADMIN ONLY — accepts { blobUrl: string, filename?: string } JSON body.
+ * ADMIN ONLY — accepts multipart/form-data with a "file" field (Excel upload).
  *
  * SPEED OPTIMIZATIONS (Vercel Pro — 60s function budget):
  *
@@ -14,12 +14,12 @@
  *
  *  3. All reads are parallel; all writes are parallel (fire-and-forget del).
  *
- *  4. A 30-second AbortController timeout on the Excel fetch prevents
- *     silent hangs (safe with the 60s total budget on Pro).
+ *  4. Excel files for 181 rows are typically <500 KB — well under Vercel's
+ *     4.5 MB body limit — so we accept the file directly in the request body
+ *     instead of a separate browser-to-Blob intermediary step.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { del } from '@vercel/blob';
 import { parseExcelBuffer } from '@/lib/excel-parser';
 import { computeTeamMetrics } from '@/lib/calculations';
 import {
@@ -100,17 +100,6 @@ function buildDiff(
   };
 }
 
-/** Fetch with an AbortController timeout so we never hang indefinitely. */
-async function fetchWithTimeout(url: string, opts: RequestInit, ms: number): Promise<Response> {
-  const ctrl = new AbortController();
-  const id   = setTimeout(() => ctrl.abort(), ms);
-  try {
-    return await fetch(url, { ...opts, signal: ctrl.signal });
-  } finally {
-    clearTimeout(id);
-  }
-}
-
 // ── Route ─────────────────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
@@ -120,41 +109,27 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized. Admin access required.' }, { status: 403, headers });
   }
 
-  let blobUrl: string | undefined;
-
   try {
-    const body = await req.json();
-    blobUrl        = body.blobUrl  as string | undefined;
-    const filename = body.filename as string | undefined;
+    // ── Accept the Excel file directly from FormData ──────────────────────
+    const formData = await req.formData();
+    const fileField = formData.get('file');
 
-    if (!blobUrl) {
-      return NextResponse.json({ error: 'Missing blobUrl in request body.' }, { status: 400, headers });
+    if (!fileField || typeof fileField === 'string') {
+      return NextResponse.json({ error: 'Missing or invalid file field in form data.' }, { status: 400, headers });
     }
 
-    const token    = process.env.BLOB_READ_WRITE_TOKEN ?? '';
-    const safeName = (filename ?? blobUrl.split('/').pop() ?? 'upload.xlsx')
-      .replace(/[^a-zA-Z0-9._-]/g, '_');
+    const file        = fileField as File;
+    const filename    = file.name ?? 'upload.xlsx';
+    const safeName    = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const arrayBuffer = await file.arrayBuffer();
 
-    // ── Parallel reads: Excel + tiny prev-metrics + changelog ─────────────
+    // ── Parallel reads: prev-metrics + changelog ───────────────────────────
     // We deliberately do NOT read the 1.25MB teams blob — we use the bundled
     // mlb-teams.json as a structural template instead (saves 2-4 seconds).
-    const [fileRes, prevMetrics, existingLog] = await Promise.all([
-      fetchWithTimeout(blobUrl, {
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
-        cache: 'no-store',
-      }, 30_000),   // 30s timeout on Excel fetch — safe within the 60s Pro budget
-      readBlobJson<PrevMetricsMap>(BLOB_PREV_METRICS),   // ~3 KB
-      readBlobJson<ChangeLogEntry[]>(BLOB_CHANGELOG_PATH), // ~50 KB
+    const [prevMetrics, existingLog] = await Promise.all([
+      readBlobJson<PrevMetricsMap>(BLOB_PREV_METRICS),        // ~3 KB
+      readBlobJson<ChangeLogEntry[]>(BLOB_CHANGELOG_PATH),    // ~50 KB
     ]);
-
-    if (!fileRes.ok) {
-      return NextResponse.json(
-        { error: `Failed to fetch uploaded file from Blob (${fileRes.status}).` },
-        { status: 500 }
-      );
-    }
-
-    const arrayBuffer = await fileRes.arrayBuffer();
 
     // ── Build lookup from bundled template (no Blob read needed) ──────────
     const templateData  = mlbTeamsTemplate as Record<string, any>;
@@ -244,11 +219,6 @@ export async function POST(req: NextRequest) {
       writeDeadline,
     ]);
 
-    // ── Clean up temp upload blob (fire-and-forget) ────────────────────────
-    if (blobUrl && token) {
-      del(blobUrl, { token }).catch(() => {});
-    }
-
     return NextResponse.json({
       success:      true,
       message:      `Data updated for ${updatedTeams.length} teams.`,
@@ -266,8 +236,7 @@ export async function POST(req: NextRequest) {
 
   } catch (err: any) {
     console.error('[upload-data] Error:', err);
-    const isTimeout = err?.name === 'AbortError';
-    const msg  = isTimeout ? 'Timed out fetching the uploaded file from storage.' : (err?.message ?? String(err));
+    const msg  = err?.message ?? String(err);
     const hint = !process.env.BLOB_READ_WRITE_TOKEN
       ? ' (BLOB_READ_WRITE_TOKEN env var is missing)'
       : '';
