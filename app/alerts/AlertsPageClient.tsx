@@ -445,8 +445,9 @@ export default function AlertsPageClient({ initialAlerts, initialState }: Props)
     if (!quiet) setLoading(false);
   }, []);
 
-  // Auto-refresh every 30 seconds
+  // Fetch live game state immediately on mount, then poll every 30 seconds
   useEffect(() => {
+    refresh(true);
     const id = setInterval(() => refresh(true), 30_000);
     return () => clearInterval(id);
   }, [refresh]);
