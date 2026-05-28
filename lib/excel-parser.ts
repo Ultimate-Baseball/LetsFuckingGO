@@ -1,11 +1,11 @@
 /**
  * Excel parser for daily bullpen data uploads.
  *
- * File format — one sheet per team (e.g. "Detroit Tigers"):
+ * File format -- one sheet per team (e.g. "Detroit Tigers"):
  *
- *   Row 2 : [" ", TeamName, null, "Daily Stats", date1, date2, ...]  ← dates start col E (idx 4)
+ *   Row 2 : [" ", TeamName, null, "Daily Stats", date1, date2, ...]  <- dates start col E (idx 4)
  *   Row 3 : [null, "Relief Pitchers", "L/R", "Categories", "DID NOT PLAY"|"Pitching Stats", ...]
- *   Rows 4–108  : Relief pitchers, 7 rows each (up to 15 slots)
+ *   Rows 4-108  : Relief pitchers, 7 rows each (up to 15 slots)
  *     +0: [index, Name,   L/R, "Pitches",   p1,  p2, ...]
  *     +1: [null,  Role,  null, "IPs",       ip1, ip2, ...]
  *     +2: [null,  null,  null, "ERA",      era1, era2, ...]
@@ -14,16 +14,16 @@
  *     +5: [null,  null,  null, "Walks",      w1,  w2, ...]
  *     +6: [null,  null,  null, "Hits",       h1,  h2, ...]
  *   Row 110: "Starting Pitchers" header
- *   Rows 111–180: Starting pitchers, same 7-row block format (up to 10 slots)
+ *   Rows 111-180: Starting pitchers, same 7-row block format (up to 10 slots)
  *   Row 182: "Disabled List" header
- *   Rows 183–195: Relief pitcher IL entries [null, name, L/R, startDate, ilType, description, null, notes]
- *   Rows 196–202: Starting pitcher IL entries (same format)
+ *   Rows 183-195: Relief pitcher IL entries [null, name, L/R, startDate, ilType, description, null, notes]
+ *   Rows 196-202: Starting pitcher IL entries (same format)
  */
 
 import * as XLSX from "xlsx";
 import type { Pitcher, GameLog, DLPlayer, StarterEntry } from "@/lib/types";
 
-// ─── Sheet Name → Team Abbreviation ───────────────────────────────────────────
+// --- Sheet Name -> Team Abbreviation -------------------------------------------
 
 const SHEET_TO_ABBR: Record<string, string> = {
   "Athletics":              "OAK",
@@ -66,7 +66,7 @@ const SKIP_SHEETS = new Set([
   "User Guide - Fantasy",
 ]);
 
-// ─── Helpers ───────────────────────────────────────────────────────────────────
+// --- Helpers -------------------------------------------------------------------
 
 function cellStr(v: unknown): string {
   if (v == null) return "";
@@ -123,13 +123,13 @@ function whip(walks: number, hits: number, totalIP: number): number | null {
   return Math.round(((walks + hits) / totalIP) * 100) / 100;
 }
 
-// ─── Parse Result ──────────────────────────────────────────────────────────────
+// --- Parse Result --------------------------------------------------------------
 
 export interface ParsedUpload {
   pitchersByTeam:  Record<string, Pitcher[]>;
   startersByTeam:  Record<string, StarterEntry[]>;
   ilByTeam:        Record<string, DLPlayer[]>;
-  /** Relief-pitcher-only IL entries (rows 183–195 in spreadsheet) */
+  /** Relief-pitcher-only IL entries (rows 183-195 in spreadsheet) */
   reliefILByTeam:  Record<string, DLPlayer[]>;
   warnings:        string[];
   stats: {
@@ -140,10 +140,10 @@ export interface ParsedUpload {
   };
 }
 
-// ─── Main Parser ───────────────────────────────────────────────────────────────
+// --- Main Parser ---------------------------------------------------------------
 
 export function parseExcelBuffer(buffer: ArrayBuffer): ParsedUpload {
-  const workbook = XLSX.read(buffer, { type: "array", dense: true });  // cellDates:false for speed — dates handled as serials below
+  const workbook = XLSX.read(buffer, { type: "array", dense: true, sheetRows: 210 });  // cellDates:false for speed -- dates handled as serials below
 
   const warnings: string[] = [];
   const pitchersByTeam:  Record<string, Pitcher[]>    = {};
@@ -159,7 +159,7 @@ export function parseExcelBuffer(buffer: ArrayBuffer): ParsedUpload {
 
     const abbr = SHEET_TO_ABBR[sheetName];
     if (!abbr) {
-      warnings.push(`Unknown sheet "${sheetName}" — skipped.`);
+      warnings.push(`Unknown sheet "${sheetName}" -- skipped.`);
       continue;
     }
 
@@ -171,11 +171,11 @@ export function parseExcelBuffer(buffer: ArrayBuffer): ParsedUpload {
     });
 
     if (raw.length < 4) {
-      warnings.push(`Sheet "${sheetName}": too few rows — skipped.`);
+      warnings.push(`Sheet "${sheetName}": too few rows -- skipped.`);
       continue;
     }
 
-    // ── Date header (row 2, 1-indexed = index 1) ───────────────────────────
+    // -- Date header (row 2, 1-indexed = index 1) ---------------------------
     // Dates start at column index 4 (col E).
     const headerRow = raw[1] ?? [];
     const dateCols: { col: number; date: string }[] = [];
@@ -196,9 +196,9 @@ export function parseExcelBuffer(buffer: ArrayBuffer): ParsedUpload {
       return d.toISOString().split("T")[0];
     })();
 
-    // ── Parse pitcher blocks ───────────────────────────────────────────────
-    // Relief pitchers: rows 4–108 (1-indexed) → indices 3–107 (0-indexed), 15 slots × 7 rows
-    // Starting pitchers: rows 111–180 (1-indexed) → indices 110–179, 10 slots × 7 rows
+    // -- Parse pitcher blocks -----------------------------------------------
+    // Relief pitchers: rows 4-108 (1-indexed) -> indices 3-107 (0-indexed), 15 slots x 7 rows
+    // Starting pitchers: rows 111-180 (1-indexed) -> indices 110-179, 10 slots x 7 rows
     // DL: row 182 is header (index 181), rows 183+ are entries (indices 182+)
 
     function parsePitcherBlocks(
@@ -348,21 +348,21 @@ export function parseExcelBuffer(buffer: ArrayBuffer): ParsedUpload {
       return result;
     }
 
-    // Relief pitchers: rows 4–108 (1-indexed) = indices 3–107
+    // Relief pitchers: rows 4-108 (1-indexed) = indices 3-107
     const relievers = parsePitcherBlocks(3, 108) as Pitcher[];
     const validRelievers = relievers.filter(p => p.name && p.name.trim() !== "");
     pitchersByTeam[abbr] = validRelievers;
     totalPitcherRows += validRelievers.length;
 
-    // Starting pitchers: rows 111–180 (1-indexed) = indices 110–179
+    // Starting pitchers: rows 111-180 (1-indexed) = indices 110-179
     const starters = parseStarterBlocks(110, 179);
     const validStarters = starters.filter(p => p.name && p.name.trim() !== "");
     startersByTeam[abbr] = validStarters;
     totalStarterRows += validStarters.length;
 
     // IL: header at row 182 (index 181)
-    // Relief pitcher IL: rows 183–195 (1-indexed) = indices 182–194
-    // Starting pitcher IL: rows 196–202 (1-indexed) = indices 195–201
+    // Relief pitcher IL: rows 183-195 (1-indexed) = indices 182-194
+    // Starting pitcher IL: rows 196-202 (1-indexed) = indices 195-201
     function parseILRows(startIdx: number, endIdx: number, pitcherType: 'reliever' | 'starter'): DLPlayer[] {
       const entries: DLPlayer[] = [];
       for (let i = startIdx; i <= endIdx && i < raw.length; i++) {
@@ -387,8 +387,8 @@ export function parseExcelBuffer(buffer: ArrayBuffer): ParsedUpload {
       return entries;
     }
 
-    const reliefIL  = parseILRows(182, 194, 'reliever');   // rows 183–195 (1-indexed)
-    const starterIL = parseILRows(195, 201, 'starter');     // rows 196–202 (1-indexed)
+    const reliefIL  = parseILRows(182, 194, 'reliever');   // rows 183-195 (1-indexed)
+    const starterIL = parseILRows(195, 201, 'starter');     // rows 196-202 (1-indexed)
     const ilList    = [...reliefIL, ...starterIL];
 
     ilByTeam[abbr]       = ilList;
