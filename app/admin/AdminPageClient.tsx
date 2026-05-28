@@ -285,31 +285,42 @@ export default function AdminPageClient() {
     setStatus("uploading");
     setResult(null);
 
-    // 90-second timeout -- the Pro 60s function budget + network transit margin
-    const ctrl  = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), 90_000);
     try {
+      // Step 1: Get a short-lived client upload token from the server
+      const tokenRes = await fetch("/api/upload-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ filename: selectedFile.name }),
+        credentials: "include",
+      });
+      if (!tokenRes.ok) {
+        const e = await tokenRes.json().catch(() => ({}));
+        throw new Error(e?.error ?? "Failed to get upload token");
+      }
+      const { clientToken, pathname } = await tokenRes.json();
+
+      // Step 2: Upload file DIRECTLY to Blob from the browser (no 4.5 MB limit)
+      const { put } = await import("@vercel/blob/client");
+      const blob = await put(pathname, selectedFile, {
+        access: "public",
+        token:  clientToken,
+      });
+
+      // Step 3: Tell the server to process the uploaded Excel from Blob
+      // 30-second client-side timeout prevents silent hang on Vercel
+      const uploadCtrl    = new AbortController();
+      const uploadTimeout = setTimeout(() => uploadCtrl.abort(), 30_000);
       let res: Response;
       try {
-        // Step 1+2: Upload file directly to Vercel Blob (bypasses the 4.5MB function body limit).
-        // The browser uploads to blob storage via a signed client token -- no bytes go through
-        // the Next.js function body, so Vercel's edge never sees a large payload.
-        const { upload } = await import('@vercel/blob/client');
-        const timestamp  = Date.now();
-        const safeName   = selectedFile.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-        const pathname   = `ubt/uploads/${timestamp}-${safeName}`;
-        const blob       = await upload(pathname, selectedFile, {
-          access:          'public',
-          handleUploadUrl: '/api/upload-token',
+        res = await fetch("/api/upload-data", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ blobUrl: blob.url, filename: selectedFile.name }),
+          credentials: "include",
+          signal: uploadCtrl.signal,
         });
-
-        // Step 3: Call the processing endpoint with just the blob URL (tiny request, no body).
-        res = await fetch(
-          `/api/upload-data?blobUrl=${encodeURIComponent(blob.url)}&filename=${encodeURIComponent(selectedFile.name)}`,
-          { method: "POST", credentials: "include", signal: ctrl.signal }
-        );
       } finally {
-        clearTimeout(timer);
+        clearTimeout(uploadTimeout);
       }
 
       let data: UploadResult;
@@ -323,14 +334,13 @@ export default function AdminPageClient() {
       if (data.success) {
         setSelectedFile(null);
         window.dispatchEvent(new CustomEvent("ubt-data-updated"));
+        fetch("/api/change-log")
+          .then(r => r.json())
+          .then(d => { if (d.success) setLog(d.log ?? []); })
+          .catch(() => {});
       }
     } catch (err: any) {
-      clearTimeout(timer);
-      const isAbort = err?.name === "AbortError";
-      const errMsg  = isAbort
-        ? "Request timed out. The server is still processing -- wait 30 seconds and check if the data updated, or try again."
-        : (err?.message ?? "Could not reach server");
-      setResult({ success: false, error: `Upload failed: ${errMsg}` });
+      setResult({ success: false, error: `Upload failed: ${err?.message ?? "Could not reach server"}` });
       setStatus("error");
     }
   };
