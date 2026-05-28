@@ -192,6 +192,31 @@ export async function POST(req: NextRequest) {
 
     const newLog = [entry, ...(existingLog ?? [])].slice(0, 90);
 
+    // -- Trim game logs to 28 days before writing to blob -------------------------
+    // Metrics are already computed above; trimming here keeps the teams blob
+    // compact (~400KB vs ~2MB) so the Vercel function finishes well inside 60s.
+    const trimDate = new Date();
+    trimDate.setDate(trimDate.getDate() - 28);
+    const trimStr  = trimDate.toISOString().split('T')[0];
+    for (const team of Object.values(byAbbr)) {
+      if (Array.isArray((team as any).pitchers)) {
+        (team as any).pitchers = (team as any).pitchers.map((p: any) => ({
+          ...p,
+          gameLog: Array.isArray(p.gameLog)
+            ? p.gameLog.filter((g: any) => g.date >= trimStr)
+            : [],
+        }));
+      }
+      if (Array.isArray((team as any).starters)) {
+        (team as any).starters = (team as any).starters.map((s: any) => ({
+          ...s,
+          gameLogs: Array.isArray(s.gameLogs)
+            ? s.gameLogs.filter((g: any) => g.date >= trimStr)
+            : [],
+        }));
+      }
+    }
+
     // -- Reconstruct full data with original key structure + updated team objects --
     // templateData keys are full team names ("Baltimore Orioles"), byAbbr keys are "BAL".
     // We need to write the modified byAbbr objects back under their original keys.
