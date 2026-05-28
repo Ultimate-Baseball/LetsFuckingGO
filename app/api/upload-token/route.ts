@@ -20,7 +20,7 @@ function isAdmin(req: NextRequest): boolean {
  * Flow:
  *  1. AdminPageClient POSTs { filename } here (tiny JSON, no file bytes).
  *  2. We return { clientToken, pathname }.
- *  3. Browser calls put(pathname, file, { access:'public', token: clientToken })
+ *  3. Browser calls put(pathname, file, { access:'public', token: clientToken, abortSignal })
  *     -> file goes DIRECTLY to Vercel Blob CDN, never through a function body.
  *  4. Browser POSTs { blobUrl, filename } to /api/upload-data to process it.
  */
@@ -38,7 +38,11 @@ export async function POST(req: NextRequest) {
     const { filename } = await req.json();
     const safe     = (filename ?? 'upload.xlsx').replace(/[^a-zA-Z0-9._-]/g, '_');
     const pathname = `ubt/uploads/${Date.now()}-${safe}`;
-    const clientToken = await generateClientTokenFromReadWriteToken({ token, pathname });
+    const clientToken = await generateClientTokenFromReadWriteToken({
+      token,
+      pathname,
+      maximumSizeInBytes: 10 * 1024 * 1024,  // 10 MB ceiling — well above typical spreadsheet size
+    });
     return NextResponse.json({ clientToken, pathname });
   } catch (err: any) {
     return NextResponse.json({ error: err?.message ?? 'Failed to generate upload token' }, { status: 500 });
