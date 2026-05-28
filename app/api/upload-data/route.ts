@@ -5,7 +5,7 @@
  * UPLOAD FLOW (two-step to bypass Vercel's 4.5 MB function body limit):
  *   1. Browser uploads the Excel file directly to Vercel Blob via /api/upload-token
  *      (no bytes go through a Next.js function body).
- *   2. Browser calls this endpoint with ?blobUrl=<url>&filename=<name> -- tiny request.
+ *   2. Browser POSTs { blobUrl, filename } to this endpoint as JSON -- tiny request.
  *   3. This function fetches the file from the blob URL, processes it, writes results,
  *      then deletes the temp upload blob.
  *
@@ -122,12 +122,19 @@ export async function POST(req: NextRequest) {
   try {
     // -- Fetch the Excel file from Vercel Blob (uploaded directly by the browser) --
     // The browser uploaded via /api/upload-token to bypass Vercel's 4.5MB body limit.
-    const blobUrl  = req.nextUrl.searchParams.get('blobUrl');
-    const filename = req.nextUrl.searchParams.get('filename') ?? 'upload.xlsx';
-    const safeName = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+    let blobUrl: string | undefined;
+    let safeName: string;
+    try {
+      const body     = await req.json();
+      blobUrl        = body.blobUrl  as string | undefined;
+      const filename = (body.filename as string | undefined) ?? 'upload.xlsx';
+      safeName       = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+    } catch {
+      return NextResponse.json({ error: 'Invalid request body.' }, { status: 400, headers });
+    }
 
     if (!blobUrl) {
-      return NextResponse.json({ error: 'Missing blobUrl parameter.' }, { status: 400, headers });
+      return NextResponse.json({ error: 'Missing blobUrl in request body.' }, { status: 400, headers });
     }
 
     const fileRes = await fetch(blobUrl, { cache: 'no-store' });
