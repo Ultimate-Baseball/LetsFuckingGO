@@ -300,16 +300,20 @@ export default function AdminPageClient() {
       const { clientToken, pathname } = await tokenRes.json();
 
       // Step 2: Upload file DIRECTLY to Blob from the browser (no 4.5 MB limit)
+      // abortSignal caps @vercel/blob's internal 10-retry loop — prevents infinite spinning
+      const blobCtrl    = new AbortController();
+      const blobTimeout = setTimeout(() => blobCtrl.abort(), 90_000); // 90s hard cap
       const { put } = await import("@vercel/blob/client");
       const blob = await put(pathname, selectedFile, {
-        access: "public",
-        token:  clientToken,
-      });
+        access:      "public",
+        token:       clientToken,
+        abortSignal: blobCtrl.signal,
+      }).finally(() => clearTimeout(blobTimeout));
 
       // Step 3: Tell the server to process the uploaded Excel from Blob
       // 30-second client-side timeout prevents silent hang on Vercel
       const uploadCtrl    = new AbortController();
-      const uploadTimeout = setTimeout(() => uploadCtrl.abort(), 30_000);
+      const uploadTimeout = setTimeout(() => uploadCtrl.abort(), 55_000); // 55s — just under server's 60s limit
       let res: Response;
       try {
         res = await fetch("/api/upload-data", {
