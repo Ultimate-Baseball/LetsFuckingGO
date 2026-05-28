@@ -291,13 +291,23 @@ export default function AdminPageClient() {
     try {
       let res: Response;
       try {
-        res = await fetch(`/api/upload-data?filename=${encodeURIComponent(selectedFile.name)}`, {
-          method:      "POST",
-          headers:     { "Content-Type": "application/octet-stream" },
-          body:        selectedFile,
-          signal:      ctrl.signal,
-          credentials: "include",
+        // Step 1+2: Upload file directly to Vercel Blob (bypasses the 4.5MB function body limit).
+        // The browser uploads to blob storage via a signed client token -- no bytes go through
+        // the Next.js function body, so Vercel's edge never sees a large payload.
+        const { upload } = await import('@vercel/blob/client');
+        const timestamp  = Date.now();
+        const safeName   = selectedFile.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const pathname   = `ubt/uploads/${timestamp}-${safeName}`;
+        const blob       = await upload(pathname, selectedFile, {
+          access:          'public',
+          handleUploadUrl: '/api/upload-token',
         });
+
+        // Step 3: Call the processing endpoint with just the blob URL (tiny request, no body).
+        res = await fetch(
+          `/api/upload-data?blobUrl=${encodeURIComponent(blob.url)}&filename=${encodeURIComponent(selectedFile.name)}`,
+          { method: "POST", credentials: "include", signal: ctrl.signal }
+        );
       } finally {
         clearTimeout(timer);
       }
