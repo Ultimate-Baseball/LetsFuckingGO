@@ -1,6 +1,13 @@
 /**
  * POST /api/upload-data
- * ADMIN ONLY -- accepts application/octet-stream body (Excel upload).
+ * ADMIN ONLY -- processes a pre-uploaded Excel file from Vercel Blob storage.
+ *
+ * UPLOAD FLOW (two-step to bypass Vercel's 4.5 MB function body limit):
+ *   1. Browser uploads the Excel file directly to Vercel Blob via /api/upload-token
+ *      (no bytes go through a Next.js function body).
+ *   2. Browser calls this endpoint with ?blobUrl=<url>&filename=<name> -- tiny request.
+ *   3. This function fetches the file from the blob URL, processes it, writes results,
+ *      then deletes the temp upload blob.
  *
  * SPEED OPTIMIZATIONS (Vercel Pro -- 60s function budget):
  *
@@ -12,14 +19,17 @@
  *  2. Diffs use a tiny `ubt/prev-metrics.json` blob (~3KB) written after
  *     each successful upload, rather than comparing against the full dataset.
  *
- *  3. All reads are parallel; all writes are parallel (fire-and-forget del).
+ *  3. All reads are parallel; all writes are parallel.
  *
- *  4. Excel files for 181 rows are typically <500 KB -- well under Vercel's
- *     4.5 MB body limit -- so we accept the file directly in the request body
- *     instead of a separate browser-to-Blob intermediary step.
+ *  4. sheetRows: 210 in excel-parser limits XLSX.read() to the rows we need,
+ *     cutting parse time ~4-5x for large files.
+ *
+ *  5. Game logs are trimmed to 28 days before writing to keep the teams blob
+ *     compact (~400KB vs ~2MB).
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { del } from '@vercel/blob';
 import { parseExcelBuffer } from '@/lib/excel-parser';
 import { computeTeamMetrics } from '@/lib/calculations';
 import {
@@ -110,13 +120,27 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // -- Accept the Excel file as raw bytes in the request body ------------
-    const filename    = req.nextUrl.searchParams.get('filename') ?? 'upload.xlsx';
-    const safeName    = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
-    const arrayBuffer = await req.arrayBuffer();
+    // -- Fetch the Excel file from Vercel Blob (uploaded directly by the browser) --
+    // The browser uploaded via /api/upload-token to bypass Vercel's 4.5MB body limit.
+    const blobUrl  = req.nextUrl.searchParams.get('blobUrl');
+    const filename = req.nextUrl.searchParams.get('filename') ?? 'upload.xlsx';
+    const safeName = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+
+    if (!blobUrl) {
+      return NextResponse.json({ error: 'Missing blobUrl parameter.' }, { status: 400, headers });
+    }
+
+    const fileRes = await fetch(blobUrl, { cache: 'no-store' });
+    if (!fileRes.ok) {
+      return NextResponse.json(
+        { error: `Failed to fetch uploaded file from blob storage (HTTP ${fileRes.status}).` },
+        { status: 400, headers }
+      );
+    }
+    const arrayBuffer = await fileRes.arrayBuffer();
 
     if (!arrayBuffer || arrayBuffer.byteLength === 0) {
-      return NextResponse.json({ error: 'Empty request body -- no file received.' }, { status: 400, headers });
+      return NextResponse.json({ error: 'Empty file received from blob storage.' }, { status: 400, headers });
     }
 
     // -- Parallel reads: prev-metrics + changelog ---------------------------
@@ -239,6 +263,13 @@ export async function POST(req: NextRequest) {
       ]),
       writeDeadline,
     ]);
+
+    // -- Clean up temp upload blob (fire-and-forget) ---------------------------
+    // Processing is done; delete the raw Excel from blob storage.
+    // Don't await -- cleanup failure must not affect the response.
+    del(blobUrl, { token: process.env.BLOB_READ_WRITE_TOKEN ?? '' }).catch(e =>
+      console.warn('[upload-data] Temp blob cleanup failed:', e?.message)
+    );
 
     return NextResponse.json({
       success:      true,
