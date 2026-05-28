@@ -107,7 +107,7 @@ function DiffRow({ diff }: { diff: TeamDiff }) {
         <span className={cn("font-bold", GRADE_COLOR[diff.before.grade ?? ""] ?? "text-muted-foreground")}>
           {diff.before.grade ?? "--"}
         </span>
-        <span className="text-muted-foreground/40">-></span>
+        <span className="text-muted-foreground/40">→</span>
         <span className={cn("font-bold", GRADE_COLOR[diff.after.grade ?? ""] ?? "text-muted-foreground")}>
           {diff.after.grade ?? "--"}
         </span>
@@ -121,7 +121,7 @@ function DiffRow({ diff }: { diff: TeamDiff }) {
         </span>
         {diff.tierChanged && (
           <>
-            <span className="text-muted-foreground/40">-></span>
+            <span className="text-muted-foreground/40">→</span>
             <span className={TIER_COLOR[diff.after.tier ?? ""] ?? "text-muted-foreground"}>
               {TIER_LABEL[diff.after.tier ?? ""] ?? "--"}
             </span>
@@ -134,7 +134,7 @@ function DiffRow({ diff }: { diff: TeamDiff }) {
         <span className="text-muted-foreground">{diff.before.score ?? "--"}</span>
         {diff.scoreChanged && (
           <>
-            <span className="text-muted-foreground/40 mx-1">-></span>
+            <span className="text-muted-foreground/40 mx-1">→</span>
             <span className="text-foreground font-bold">{diff.after.score ?? "--"}</span>
             <ScoreArrow before={diff.before.score} after={diff.after.score} />
           </>
@@ -145,7 +145,7 @@ function DiffRow({ diff }: { diff: TeamDiff }) {
       <div className="font-mono text-muted-foreground">
         {diff.before.whip14d?.toFixed(2) ?? "--"}
         {diff.after.whip14d !== diff.before.whip14d && (
-          <span className="ml-1 text-foreground">-> {diff.after.whip14d?.toFixed(2) ?? "--"}</span>
+          <span className="ml-1 text-foreground">→ {diff.after.whip14d?.toFixed(2) ?? "--"}</span>
         )}
       </div>
 
@@ -153,7 +153,7 @@ function DiffRow({ diff }: { diff: TeamDiff }) {
       <div className="font-mono text-muted-foreground">
         {diff.before.avgReliefIPPerGame?.toFixed(2) ?? "--"}
         {diff.after.avgReliefIPPerGame !== diff.before.avgReliefIPPerGame && (
-          <span className="ml-1 text-foreground">-> {diff.after.avgReliefIPPerGame?.toFixed(2) ?? "--"}</span>
+          <span className="ml-1 text-foreground">→ {diff.after.avgReliefIPPerGame?.toFixed(2) ?? "--"}</span>
         )}
       </div>
     </div>
@@ -586,7 +586,7 @@ export default function AdminPageClient() {
             <div className="mt-4 flex flex-wrap gap-2">
               {result.success && (
                 <a href="/" className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors">
-                  View Live Dashboard ->
+                  View Live Dashboard →
                 </a>
               )}
               <button onClick={resetForm} className="px-4 py-2 rounded-lg border border-border/50 text-sm text-muted-foreground hover:text-foreground hover:border-border transition-colors">
